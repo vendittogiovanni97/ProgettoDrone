@@ -5,6 +5,7 @@ import expressWs from "express-ws";
 import cors from "cors";
 import expressSession from "express-session";
 import { oggi } from "./configuration/time.config";
+import addRoutes from "./routers";
 
 dotenv.config();
 
@@ -36,6 +37,8 @@ app.use(
     credentials: true,
   })
 );
+
+addRoutes(app)
 
 server.listen(port, () => {
   console.log(`Server in ascolto sulla porta ${port} alle ${oggi}`);
