@@ -20,9 +20,62 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
-.login-container
-{
+.login-container {
+  width: 50%;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f8f9fa;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
 
+.login-container input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.login-checkbox {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.login-checkbox a {
+  text-decoration: none;
+  color: #1266f1;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #1266f1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0a58ca;
+}
+
+a {
+  text-decoration: none;
+  color: #1266f1;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 

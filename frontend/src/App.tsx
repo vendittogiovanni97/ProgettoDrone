@@ -1,10 +1,13 @@
 import './App.css'
+import LoginPage from "./pages/Login";
+
 
 function App() {
 
 
   return (
-<h1>CIAO BRO</h1>
+      <LoginPage />
+
   )
 }
 

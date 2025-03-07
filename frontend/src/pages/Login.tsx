@@ -1,40 +1,55 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [rememberMe, setRememberMe] = useState(false);                    //parametri utili per la pag. Login
+    const [password, setPassword] = useState("");                                                                   //Parametri utili per la pagina
+    const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const validazioneEmail = (email:string) =>
-    {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;                    //metodo con regex per validazione email
+    const validazioneEmail = (email: string) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;                                                            //metodo validazione Email
         return emailRegex.test(email);
     };
-    const validazionePassword = (password:string) =>
-    {
-        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;     //metodo con regex per validazione password
+
+    const validazionePassword = (password: string) => {
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;                                             //metodo validazione Password
         return passwordRegex.test(password);
     };
-    const handleLogin = () => {                             //metodo per gestire il login
+
+    const handleLogin = () => {
         if (!validazioneEmail(email)) {
-            setError("Formato Email non valido!");                          //Se Validazione Email false, manda errore
+            setError("Formato Email non valido!");                                                                 //Metodo Controllo Validazione
             return;
         }
-        if (!validazionePassword(password)) {                               //Se Validazione Password false, manda errore
-            setError("La Password deve essere almeno di 8 caratteri e contenere almeno una lettera ed un numero");
+        if (!validazionePassword(password)) {
+            setError("La Password deve essere almeno di 8 caratteri e contenere almeno una lettera ed un numero.");
             return;
         }
+
+        const storedUser = localStorage.getItem("registeredUser");
+        if (!storedUser) {
+            setError("Nessun account registrato con questa email.");                                                //Metodo per recuperare un User Registrato
+            return;
+        }
+
+        const { email: savedEmail, password: savedPassword } = JSON.parse(storedUser);
+
+        if (email !== savedEmail || password !== savedPassword) {
+            setError("Email o password errati!");
+            return;
+        }
+
         setError("");
         if (rememberMe) {
-            localStorage.setItem("userEmail", email);                       //Se aggiorno pagina rimango con i dati inseriti
+            localStorage.setItem("userEmail", email);
             localStorage.setItem("userPassword", password);
         }
+
         alert("Login Avvenuto con Successo!");
     };
+
     return (
         <div className="login-container">
             <input
@@ -63,10 +78,15 @@ const LoginPage: React.FC = () => {
             </div>
             <button onClick={handleLogin}>Accedi</button>
             <div>
-                <p>Non Hai Già un Account? <a href="#!" onClick={() => navigate("/register")} >Registrati</a></p>
+                <p>Non Hai Già un Account?
+                    <span onClick={() => navigate("/register")} style={{ color: "blue", cursor: "pointer" }}>
+                        Registrati
+                    </span>
+                </p>
             </div>
-            </div>
+        </div>
     );
 };
 
 export default LoginPage;
+
