@@ -9,17 +9,14 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  }
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node"
+  },
 
 
-  "compilerOptions": {
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "skipLibCheck": true
 
 }
 
 
-}
+
 
