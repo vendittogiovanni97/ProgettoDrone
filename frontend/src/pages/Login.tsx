@@ -54,7 +54,7 @@ const LoginPage: React.FC = () => {
         <div className="login-container">
             <input
                 type="email"
-                placeholder="Email address"
+                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
@@ -74,7 +74,12 @@ const LoginPage: React.FC = () => {
                         onChange={(e) => setRememberMe(e.target.checked)}
                     /> Ricordami
                 </label>
-                <a href="#!">Password Dimenticata?</a>
+                <span
+                    onClick={() => navigate("/forgot-password")}
+                    style={{ color: "blue", cursor: "pointer" }}
+                >
+        Password Dimenticata?
+    </span>
             </div>
             <button onClick={handleLogin}>Accedi</button>
             <div>
