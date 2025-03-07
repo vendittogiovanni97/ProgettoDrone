@@ -1,0 +1,1 @@
+///Gestione classe con connessione ad mttqs, con type congifmttqs
