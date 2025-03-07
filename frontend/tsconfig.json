@@ -3,5 +3,23 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
+
+
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true
+
 }
+
+
+}
+
