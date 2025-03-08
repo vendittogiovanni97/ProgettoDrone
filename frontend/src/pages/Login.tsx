@@ -82,9 +82,9 @@ const LoginPage: React.FC = () => {
     </span>
             </div>
             <button onClick={handleLogin}>Accedi</button>
-            <div>
+            <div className="login-register">
                 <p>Non Hai Già un Account?
-                    <span onClick={() => navigate("/register")} style={{ color: "blue", cursor: "pointer" }}>
+                    <span onClick={() => navigate("/register")} style={{ color: "blue", cursor: "pointer",padding: 5}}>
                         Registrati
                     </span>
                 </p>

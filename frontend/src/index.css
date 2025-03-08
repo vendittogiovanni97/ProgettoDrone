@@ -19,17 +19,19 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #888888;
 }
 .login-container {
-  width: 50%;
-  margin: 5% auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-left:250%;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f8f9fa;
+  background-color: #f4f7fa;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -40,18 +42,25 @@ body {
   border-radius: 5px;
   border: 1px solid #ccc;
 }
-
 .login-checkbox {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   width: 100%;
   margin-bottom: 10px;
+  color: black;
 }
 
-.login-checkbox a {
-  text-decoration: none;
-  color: #1266f1;
+.login-checkbox input {
+  margin-bottom: 1px; /* Rimuovi margine sotto l'input */
+  margin-right: 10px; /* Distanza tra checkbox e la scritta "Ricordami" */
 }
+
+.login-checkbox span {
+  cursor: pointer;
+  color: blue;
+}
+
 
 button {
   width: 100%;
@@ -75,6 +84,168 @@ a {
 }
 
 a:hover {
+  text-decoration: underline;
+}
+.login-register p
+{
+  color:black;
+}
+
+/* Container principale della pagina */
+.register-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  width: 30vw;
+  padding: 20px;
+  background-color: #f4f7fa;
+  margin-left: 100%;
+}
+
+/* Titolo della pagina */
+.register-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* Stile per gli input del modulo */
+.register-container input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.register-container input:focus {
+  border-color: #1266f1;
+  outline: none;
+}
+
+/* Stile per il messaggio di errore */
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+  font-size: 0.875rem;
+}
+
+/* Stile per i pulsanti */
+.register-container button {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px;
+  background-color: #1266f1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.register-container button:hover {
+  background-color: #0e54b1;
+}
+
+/* Link per il login */
+.register-container p {
+  margin-top: 15px;
+  font-size: 1rem;
+  color:black;
+}
+
+.register-container p span {
+  color: #1266f1;
+  cursor: pointer;
+}
+
+.register-container p span:hover {
+  text-decoration: underline;
+}
+/* Container principale della pagina */
+.forgot-password-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  width: 30vw;
+  padding: 20px;
+  background-color: #f4f7fa;
+  margin-left: 100%;
+}
+
+/* Titolo della pagina */
+.forgot-password-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* Stile per gli input del modulo */
+.forgot-password-container input {
+  width: 100%;
+  max-width: 400px; /* Limita la larghezza massima degli input */
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.forgot-password-container input:focus {
+  border-color: #1266f1;
+  outline: none;
+}
+.forgot-password-container p
+{
+  color: black;
+}
+
+/* Stile per il messaggio di errore */
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+  font-size: 0.875rem;
+}
+
+/* Stile per i pulsanti */
+.forgot-password-container button {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px;
+  background-color: #1266f1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.forgot-password-container button:hover {
+  background-color: #0e54b1;
+}
+
+/* Link per il login */
+.forgot-password-container p {
+  margin-top: 15px;
+  font-size: 1rem;
+}
+
+.forgot-password-container p span {
+  color: #1266f1;
+  cursor: pointer;
+}
+
+.forgot-password-container p span:hover {
   text-decoration: underline;
 }
 
