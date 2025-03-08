@@ -41,5 +41,5 @@ app.use(
 addRoutes(app)
 
 server.listen(port, () => {
-  console.log(`Server in ascolto sulla porta ${port} alle ${oggi}`);
+  console.log(`Server in ascolto sulla porta ${port} , ${oggi}`);
 });
