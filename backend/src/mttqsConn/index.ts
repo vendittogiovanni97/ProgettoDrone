@@ -1,6 +1,6 @@
 ///Gestione classe con connessione ad mttqs, con interface mqttConfid
 import mqtt, { IClientOptions, MqttClient } from "mqtt";
-import mqttConfig from "../configuration/mttqsConfig";
+import mqttConfig from "../configuration/mqttsConfig";
 
 export default class MQTTService {
   private static instance: MQTTService;
