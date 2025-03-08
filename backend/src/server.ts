@@ -9,6 +9,7 @@ import addRoutes from "./routers";
 import { WebSocketManager } from "./socket-io";
 import fs from "fs"
 import MQTTService from "./mttqsConn";
+import MQTTServiceProva from "./mttqsConn/prova";
 
 dotenv.config();
 
@@ -52,7 +53,10 @@ app.use(
 
 new WebSocketManager(server)
 // Ottieni l'istanza del servizio MQTT
- MQTTService.getInstance()
+//MQTTService.getInstance()
+
+MQTTServiceProva.getInstance()
+
 
 addRoutes(app)
 
