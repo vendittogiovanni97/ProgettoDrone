@@ -5,15 +5,15 @@ import { Server } from "https";
 import { EventEmitter, WebSocket, WebSocketServer } from "ws";
 import { oggi } from "../configuration/time.config";
 
- export class WebSocketManager extends EventEmitter{
+export class WebSocketManager extends EventEmitter {
   private wss: WebSocketServer;
   clients: Map<number, any>;
   clientCounter: number;
 
   constructor(server: Server) {
     console.log("Istanza server Websocket");
-    super()
-    this.wss = new WebSocket.Server({ server });
+    super();
+    this.wss = new WebSocket.Server({ server, path: "/" });
     this.clients = new Map(); //Qua mappiamo i client con un id per tenerli traccia
     this.clientCounter = 0;
     this.init();
@@ -33,7 +33,9 @@ import { oggi } from "../configuration/time.config";
       lastActivity: oggi,
     });
 
-    console.log(`Websocket : Nuovo Client ${clientId} connesso da ${request.socket.remoteAddress} `)
-    this.emit('connection',  {clientId, ws, request})
+    console.log(
+      `Websocket : Nuovo Client ${clientId} connesso da ${request.socket.remoteAddress} `
+    );
+    this.emit("connection", { clientId, ws, request });
   }
 }
