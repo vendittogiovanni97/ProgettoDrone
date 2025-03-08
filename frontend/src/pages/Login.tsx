@@ -30,11 +30,11 @@ const LoginPage: React.FC = () => {
 
         const storedUser = localStorage.getItem("registeredUser");
         if (!storedUser) {
-            setError("Nessun account registrato con questa email.");                                                //Metodo per recuperare un User Registrato
-            return;
+            setError("Nessun account registrato con questa email.");                                                //Metodo per il Login, prima superi le due validazioni,
+            return;                                                                                                 //poi controlla se c'è già un account registrato
         }
 
-        const { email: savedEmail, password: savedPassword } = JSON.parse(storedUser);
+        const { email: savedEmail, password: savedPassword } = JSON.parse(storedUser);                              //salvi, ed all'accesso se sbagli uno dei due ti da errore
 
         if (email !== savedEmail || password !== savedPassword) {
             setError("Email o password errati!");
