@@ -8,6 +8,7 @@ import { oggi } from "./configuration/time.config";
 import addRoutes from "./routers";
 import { WebSocketManager } from "./socket-io";
 import fs from "fs"
+import MQTTService from "./mttqsConn";
 
 dotenv.config();
 
@@ -50,6 +51,8 @@ app.use(
 );
 
 new WebSocketManager(server)
+// Ottieni l'istanza del servizio MQTT
+ MQTTService.getInstance()
 
 addRoutes(app)
 
