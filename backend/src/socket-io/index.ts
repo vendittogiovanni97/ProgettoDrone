@@ -36,6 +36,6 @@ export class WebSocketManager extends EventEmitter {
     console.log(
       `Websocket : Nuovo Client ${clientId} connesso da ${request.socket.remoteAddress} `
     );
-    this.emit("connection", { clientId, ws, request });
+    //this.emit("connection", { clientId, ws, request });
   }
 }
