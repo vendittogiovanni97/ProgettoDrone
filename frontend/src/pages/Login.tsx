@@ -48,6 +48,7 @@ const LoginPage: React.FC = () => {
         }
 
         alert("Login Avvenuto con Successo!");
+        navigate("/dashboard"); // Reindirizzamento alla Dashboard
     };
 
     return (
