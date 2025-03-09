@@ -1,20 +1,19 @@
 ///Gestione classe con connessione ad mttqs, con interface mqttConfid
+import mttqConfig from "../configuration/mqttsConfig";
 import mqtt, { IClientOptions, MqttClient } from "mqtt";
-import mqttConfig from "../configuration/mqttsConfig";
 
-export default class MQTTService {
-  private static instance: MQTTService;
+export default class MQTTServiceProva {
+  private static instance: MQTTServiceProva;
   private client: MqttClient;
 
   private constructor() {
     const options: IClientOptions = {
-      host: mqttConfig.broker,
-      port: 8883, // Assicurati che sia la porta giusta per il tuo broker
+      host: "broker.emqx.io",
+      port: 8883,
       protocol: "mqtts",
-      username: mqttConfig.username,
-      password: mqttConfig.password,
-      clientId: mqttConfig.clientId,
-      rejectUnauthorized: false, // Cambia a true per connessioni sicure
+      clientId: "clientId_univoco",
+      keepalive: 60,
+      rejectUnauthorized: false,
     };
 
     this.client = mqtt.connect(options);
@@ -24,10 +23,10 @@ export default class MQTTService {
     });
 
     ///// iscrizione al topic
-    this.client.subscribe(mqttConfig.topicPrefix, (err) => {
+    this.client.subscribe("testtopic/#", (err) => {
       console.log("subscribe in attesa");
       if (!err) {
-        console.log(`Sottoscritto al topic: ${mqttConfig.topicPrefix}`);
+        console.log(`Sottoscritto al topic:`);
       } else {
         console.error("❌ Errore durante la sottoscrizione:", err);
       }
@@ -35,7 +34,7 @@ export default class MQTTService {
 
     ///// pubblicazione del messaggio
     this.client.publish(
-      mqttConfig.topicPrefix,
+      "testtopic/#",
       "Ciao, questo è un messaggio di prova",
       (err) => {
         if (!err) {
@@ -63,10 +62,10 @@ export default class MQTTService {
   }
 
   // Metodo per ottenere l'istanza singleton
-  public static getInstance(): MQTTService {
-    if (!MQTTService.instance) {
-      MQTTService.instance = new MQTTService();
+  public static getInstance(): MQTTServiceProva {
+    if (!MQTTServiceProva.instance) {
+      MQTTServiceProva.instance = new MQTTServiceProva();
     }
-    return MQTTService.instance;
+    return MQTTServiceProva.instance;
   }
 }
