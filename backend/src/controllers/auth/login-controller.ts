@@ -2,12 +2,12 @@ import { Request, Response } from "express";
 import { LoginInfo } from "../../types/infoSchema";
 import User from "../../model/userSchema";
 import { AppError } from "../../types/appError";
-import { responseStatus } from "../../constants/statusEnum";
 import { ErrorCodes } from "../../constants/errorCodes";
 import bcrypt from "bcrypt";
 import { SessionManager } from "../../sessionData";
 import { Cookie, SessionData } from "express-session";
 import { AppSuccess } from "../../types/succesType";
+import { responseStatus } from "../../constants/statusEnum";
 
 
 const login = async (

@@ -3,11 +3,11 @@ import { RegisterInfo } from "../../types/infoSchema";
 import { RegisterSchemaZod } from "../../validation/InfoSchemaValidation";
 import { AppError } from "../../types/appError";
 import { responseStatus } from "../../constants/statusEnum";
-import { ErrorCodes } from "../../constants/errorCodes";
 import bcrypt from "bcrypt";
 import User from "../../model/userSchema";
 import { AppSuccess } from "../../types/succesType";
 import { SuccessCodes } from "../../constants/succesCode";
+import { ErrorCodes } from "../../constants/errorCodes";
 
 const register = async (
   request: Request<undefined, unknown, RegisterInfo>,

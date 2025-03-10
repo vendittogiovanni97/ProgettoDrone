@@ -22,7 +22,7 @@ const UserSchema: Schema = new Schema({
   },
 });
 
-console.log('Dati dello userSchema',  UserSchema)
+//console.log('Dati dello userSchema',  UserSchema)
 const User = mongoose.model<IUser>('User', UserSchema);
 console.log('Modello User creato:', User.collection.name)
 export default User

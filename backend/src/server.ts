@@ -23,11 +23,7 @@ if (process.env.SESSION_SECRET === undefined) {
 const app = express();
 const appws = expressWs(app);
 
-const server = https.createServer({
-  key: fs.readFileSync('../certificati/domain.key'),
-  cert: fs.readFileSync('../certificati/domain.crt'),
-  passphrase: "pippo"
-}, appws.app)
+//const server = https.createServer({}, appws.app)
 
 
 app.use(express.json());
@@ -52,15 +48,15 @@ app.use(
   })
 );
 connectDB();
-new WebSocketManager(server)
+//new WebSocketManager(server)
 // Ottieni l'istanza del servizio MQTT
-MQTTService.getInstance()
+//MQTTService.getInstance()
 
 //MQTTServiceProva.getInstance()
 
 
 addRoutes(app)
 
-server.listen(port, () => {
+app.listen(port, () => {
   console.log(`Server in ascolto sulla porta ${port} , ${oggi}`);
 });
