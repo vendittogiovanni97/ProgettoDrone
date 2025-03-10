@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "./pages/Login";
+import LoginPage from "./pages/Login.tsx";
 import RegisterPage from "./pages/Register";
 import ForgotPasswordPage from "./pages/ForgettedPassword";
 import DashboardPage from "./pages/Dashboard";

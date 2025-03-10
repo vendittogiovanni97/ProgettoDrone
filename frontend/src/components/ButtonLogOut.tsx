@@ -5,14 +5,13 @@ const LogoutButtonComponent: React.FC = () =>
 {
     const navigate = useNavigate();
     const handleLogout = () => {
-        sessionStorage.removeItem("sessionUser"); // Rimuove solo la sessione attuale
+        sessionStorage.removeItem("sessionUser");                                // Rimuove solo la sessione attuale
         alert("Sei uscito dalla sessione!");
         navigate("/login");
     };
     return (
-        <button onClick={handleLogout} className="logout-button">
-            Logout
-        </button>
+
+                    <button onClick={handleLogout} className="logout-button">LogOut</button>
     );
 };
 

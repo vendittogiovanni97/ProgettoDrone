@@ -17,7 +17,9 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100vw;
   min-height: 100vh;
   background-color: #888888;
 }
@@ -27,7 +29,7 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-left:250%;
+  margin-top:60%;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -101,7 +103,7 @@ a:hover {
   width: 30vw;
   padding: 20px;
   background-color: #f4f7fa;
-  margin-left: 100%;
+  margin-top:40%;
 }
 
 /* Titolo della pagina */
@@ -178,7 +180,7 @@ a:hover {
   width: 30vw;
   padding: 20px;
   background-color: #f4f7fa;
-  margin-left: 100%;
+  margin-top:40%;
 }
 
 /* Titolo della pagina */
@@ -270,14 +272,14 @@ a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: lightgray;
+  background-color: black;
   color: white;
   width: 100%;
-  height:5%;
+  height:6%;
 }
 
 .drone-logo {
-  height: 45px;
+  height: 40px;
   margin-left:0; !important
 }
 /*Stile Dashboard*/
@@ -289,14 +291,80 @@ a:hover {
 }
 
 .dashboard-content {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   text-align: center;
-  padding: 20px;
+  width: 100%;
+  height: 50%;
 }
+.dashboard-table
+{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width:50%;
+  height:50%;
+}
+/* Stile generale per la griglia */
+
+.ag-theme-alpine {
+  width: 100%;
+  height: 400px; /* Imposta un'altezza fissa per la griglia */
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombra leggera per la tabella */
+}
+
+/* Stile per il pulsante */
+.details-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center; /* Centra il pulsante */
+}
+
+.details-button {
+  padding: 10px 20px;
+  background-color: #007bff; /* Colore blu */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: auto; /* Rendi il pulsante più piccolo */
+  min-width: 150px; /* Imposta una larghezza minima */
+}
+
+.details-button:hover {
+  background-color: #0056b3; /* Colore blu più scuro al passaggio del mouse */
+}
+
+/* Aggiungi uno sfondo alternato alle righe della tabella */
+.ag-theme-alpine .ag-row:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+/* Definisci un'altezza per la cella della tabella */
+.ag-theme-alpine .ag-cell {
+  height: 50px; /* Imposta un'altezza per le celle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Aggiungi uno spazio tra il pulsante e la tabella */
+.ag-theme-alpine + .details-container {
+  margin-top: 20px;
+}
+.leaflet-container {
+  height: 400px;
+  width: 100%;
+}
+
+
+
 
 
 
