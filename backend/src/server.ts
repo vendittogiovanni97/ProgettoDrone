@@ -11,7 +11,6 @@ import fs from "fs"
 import MQTTService from "./mttqsConn";
 import MQTTServiceProva from "./mttqsConn/prova";
 import connectDB from "./db/dbConfig";
-import User from "./model/userSchema";
 
 dotenv.config();
 
@@ -55,7 +54,7 @@ app.use(
 connectDB();
 new WebSocketManager(server)
 // Ottieni l'istanza del servizio MQTT
-//MQTTService.getInstance()
+MQTTService.getInstance()
 
 //MQTTServiceProva.getInstance()
 
