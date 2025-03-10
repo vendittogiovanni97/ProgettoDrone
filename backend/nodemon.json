@@ -1,0 +1,4 @@
+{
+  "watch": [".env", "src/"],
+  "ext": ".ts,.json,.env"
+}
