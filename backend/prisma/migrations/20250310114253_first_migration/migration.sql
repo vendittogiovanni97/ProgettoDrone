@@ -18,7 +18,7 @@ CREATE TABLE `drones` (
     `deviceId` VARCHAR(191) NOT NULL,
     `uniqueId` VARCHAR(191) NOT NULL,
     `status` ENUM('ONLINE', 'OFFLINE') NOT NULL DEFAULT 'OFFLINE',
-    `batteryLevel` DOUBLE NOT NULL DEFAULT 100.0,
+    `batteryLevel` DOUBLE NULL DEFAULT 100.0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -34,7 +34,6 @@ CREATE TABLE `missions` (
     `statusMission` ENUM('COMPLETED', 'IN_PROGRESS') NOT NULL DEFAULT 'IN_PROGRESS',
     `startTime` DATETIME(3) NOT NULL,
     `endTime` DATETIME(3) NULL,
-    `payload` VARCHAR(191) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -45,7 +44,6 @@ CREATE TABLE `position_logs` (
     `missionId` INTEGER NOT NULL,
     `lan` DOUBLE NOT NULL,
     `lon` DOUBLE NOT NULL,
-    `altitude` DOUBLE NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
