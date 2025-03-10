@@ -1,34 +1,23 @@
-<<<<<<< HEAD
-import './App.css'
-
-function App() {
-
-
-  return (
-<h1>CIAO BRO</h1>
-  )
-=======
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "./pages/Login.tsx";
-import RegisterPage from "./pages/Register";
-import ForgotPasswordPage from "./pages/ForgettedPassword";
-import DashboardPage from "./pages/Dashboard";
+import { BrowserRouter as  Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
+import LoginPage from './pages/Login';
+import DashboardPage from './pages/Dashboard';
+import RegisterPage from './pages/Register';
 
 function App() {
   return (
-      <Router>
-        <Routes>
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/login" element={<LoginPage />} />
+    <>
+    <BrowserRouter> 
+    <Routes>
+          <Route path="/login" element={<LoginPage/>} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-
+          <Route path='/dashboard' element={<DashboardPage/>} />
+          {/* Reindirizza alla pagina di login se la route non è specificata */}
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          {/* Altre route della tua applicazione... */}
         </Routes>
-      </Router>
+    </BrowserRouter>
+    </>
   );
->>>>>>> 5b096fac218d3d0cc20e8809dda77ad3e7c946be
 }
 
 export default App;
-

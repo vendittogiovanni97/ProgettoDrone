@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-
-
-export  {}
-=======
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -101,4 +96,3 @@ const LoginPage: React.FC = () => {
 
 export default LoginPage;
 
->>>>>>> 5b096fac218d3d0cc20e8809dda77ad3e7c946be
