@@ -1,0 +1,133 @@
+/* Stile per il contenitore principale */
+.register-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #e0f7fa; /* Colore cielo chiaro */
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  border: 2px solid #80deea; /* Bordo azzurro */
+}
+
+/* Stile per il titolo */
+.register-container h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #00796b; /* Verde scuro */
+  font-family: 'Arial', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Stile per i campi del form */
+.register-container form div {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.register-container label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #00695c; /* Verde scuro */
+  font-size: 16px;
+}
+
+.register-container input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #80deea; /* Bordo azzurro */
+  border-radius: 6px;
+  font-size: 16px;
+  box-sizing: border-box;
+  background-color: #f0f8ff; /* Azzurro chiaro */
+  color: #004d40; /* Verde scuro */
+}
+
+.register-container input:focus {
+  border-color: #00bcd4; /* Turchese */
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 188, 212, 0.6);
+}
+
+/* Stile per il pulsante di registrazione */
+.register-container button {
+  width: 100%;
+  padding: 12px;
+  background-color: #00bcd4; /* Turchese */
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.register-container button:hover {
+  background-color: #0097a7; /* Turchese scuro */
+  transform: scale(1.02);
+}
+
+.register-container button:active {
+  transform: scale(0.98);
+}
+
+/* Stile per il link di accesso */
+.register-container p {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #00796b; /* Verde scuro */
+}
+
+.register-container a {
+  color: #00bcd4; /* Turchese */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.register-container a:hover {
+  text-decoration: underline;
+  color: #0097a7; /* Turchese scuro */
+}
+
+/* Stile per i messaggi di errore */
+.error-message {
+  color: #d32f2f; /* Rosso */
+  font-size: 14px;
+  margin-top: 10px;
+  background-color: #ffebee; /* Rosso chiaro */
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #d32f2f;
+}
+
+/* Stile per i messaggi di successo */
+.success-message {
+  color: #388e3c; /* Verde */
+  font-size: 14px;
+  margin-top: 10px;
+  background-color: #e8f5e9; /* Verde chiaro */
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #388e3c;
+}
+
+/* Effetto drone (opzionale) */
+.register-container::before {
+  content: "✈️"; /* Emoji di un aereo/drone */
+  font-size: 40px;
+  display: block;
+  margin-bottom: 10px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}

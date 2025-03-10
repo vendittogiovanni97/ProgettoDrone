@@ -1,17 +1,16 @@
-
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "./pages/Login.tsx";
-import RegisterPage from "./pages/Register";
 import ForgotPasswordPage from "./pages/ForgettedPassword";
 import DashboardPage from "./pages/Dashboard";
+import { LoginPages } from "./pages/LoginPages.tsx";
+import { RegisterPages } from "./pages/RegisterPages.tsx";
 
 function App() {
     return (
         <Router>
             <Routes>
                 <Route path="/" element={<Navigate to="/login"/>}/>
-                <Route path="/login" element={<LoginPage/>}/>
-                <Route path="/register" element={<RegisterPage/>}/>
+                <Route path="/login" element={<LoginPages/>}/>
+                <Route path="/register" element={<RegisterPages/>}/>
                 <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
                 <Route path="/dashboard" element={<DashboardPage/>}/>
 
