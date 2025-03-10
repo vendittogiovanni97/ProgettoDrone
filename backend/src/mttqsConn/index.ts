@@ -1,6 +1,8 @@
 ///Gestione classe con connessione ad mttqs, con interface mqttConfid
 import mqtt, { IClientOptions, MqttClient } from "mqtt";
 import mqttConfig from "../configuration/mqttsConfig";
+import DroneHistory from "../models/droneSchemaHistory";
+import RealTimeDroneData from "../models/droneSchemaRealTime";
 
 export default class MQTTService {
   private static instance: MQTTService;
@@ -45,12 +47,45 @@ export default class MQTTService {
         }
       }
     );
-
+    const droneStatus = new Map();
     // Gestione dei messaggi in arrivo
-    this.client.on("message", (topic, message) => {
-      console.log(
-        `Messaggio ricevuto sul topic ${topic}: ${message.toString()}`
-      );
+    this.client.on("message", async (topic, message) => {
+      const topicParts = topic.split("/");
+      const deviceId = topicParts[2];
+      const uniqueId = topicParts[3];
+      const data = JSON.parse(message.toString());
+      const update = {
+        uniqueId,
+        status: "ONLINE",
+        timestamp: new Date(), // Aggiorna il timestamp
+        lat: data.lat,
+        lon: data.lon,
+        temperature: data.temperature,
+      };
+      const options = { upsert: true, new: true }; // Opzioni per upsert
+
+      const drone = new DroneHistory({
+        deviceId,
+        uniqueId,
+        status: "ONLINE",
+        lat: data.lat,
+        lon: data.lon,
+        temperature: data.temperature,
+      });
+      await drone.save();
+      await RealTimeDroneData.findOneAndUpdate({deviceId}, update, options);
+      console.log(`Dati salvati per il drone ${deviceId}`);
+
+      const timeout = setTimeout(async () => {
+        await RealTimeDroneData.findOneAndUpdate(
+          { deviceId },
+          { status: "OFFLINE" },
+          { new: true }
+        );
+        console.log(`Drone ${deviceId} impostato su OFFLINE per inattività.`);
+      }, 5 * 60 * 1000); // 5 minuti
+  
+      droneStatus.set(deviceId, timeout); // Salva il timeout nella mappa
     });
 
     this.client.on("error", (err) => {
