@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@prisma/client": "^6.4.1",
     "@types/express-ws": "^3.0.5",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
@@ -21,6 +22,7 @@
     "moment-timezone": "^0.5.47",
     "mongoose": "^8.12.1",
     "mqtt": "^5.1.4",
+    "prisma": "^6.4.1",
     "ws": "^8.14.2",
     "zod": "^3.24.2"
   },
