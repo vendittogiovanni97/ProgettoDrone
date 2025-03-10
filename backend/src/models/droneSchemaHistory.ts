@@ -1,12 +1,6 @@
 import { timeStamp } from "console";
 import mongoose from "mongoose";
 
-export enum Status {
-  ONLINE,
-  OFFLINE,
-  IN_MISSION,
-}
-
 const { Schema, model } = mongoose;
 
 // Schema per la cronologia dei droni
@@ -20,7 +14,7 @@ const DroneHistorySchema = new Schema(
       type: Number,
       required: true,
     },
-    status: { type: String, enum: Status },
+    status: { type: String,default: "OFFLINE"},
     lat: {
       type: Number,
       required: true,

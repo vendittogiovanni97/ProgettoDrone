@@ -1,7 +1,7 @@
 ///Gestione classe con connessione ad mttqs, con interface mqttConfid
 import mqtt, { IClientOptions, MqttClient } from "mqtt";
 import mqttConfig from "../configuration/mqttsConfig";
-import DroneHistory, { Status } from "../models/droneSchemaHistory";
+import DroneHistory from "../models/droneSchemaHistory";
 import RealTimeDroneData from "../models/droneSchemaRealTime";
 
 export default class MQTTService {
@@ -47,7 +47,7 @@ export default class MQTTService {
         }
       }
     );
-
+    const droneStatus = new Map();
     // Gestione dei messaggi in arrivo
     this.client.on("message", async (topic, message) => {
       const topicParts = topic.split("/");
@@ -56,7 +56,7 @@ export default class MQTTService {
       const data = JSON.parse(message.toString());
       const update = {
         uniqueId,
-        status: Status.ONLINE,
+        status: "ONLINE",
         timestamp: new Date(), // Aggiorna il timestamp
         lat: data.lat,
         lon: data.lon,
@@ -67,7 +67,7 @@ export default class MQTTService {
       const drone = new DroneHistory({
         deviceId,
         uniqueId,
-        status: Status.ONLINE,
+        status: "ONLINE",
         lat: data.lat,
         lon: data.lon,
         temperature: data.temperature,
@@ -75,6 +75,17 @@ export default class MQTTService {
       await drone.save();
       await RealTimeDroneData.findOneAndUpdate({deviceId}, update, options);
       console.log(`Dati salvati per il drone ${deviceId}`);
+
+      const timeout = setTimeout(async () => {
+        await RealTimeDroneData.findOneAndUpdate(
+          { deviceId },
+          { status: "OFFLINE" },
+          { new: true }
+        );
+        console.log(`Drone ${deviceId} impostato su OFFLINE per inattività.`);
+      }, 5 * 60 * 1000); // 5 minuti
+  
+      droneStatus.set(deviceId, timeout); // Salva il timeout nella mappa
     });
 
     this.client.on("error", (err) => {
