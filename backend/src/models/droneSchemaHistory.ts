@@ -14,7 +14,6 @@ const DroneHistorySchema = new Schema(
       type: Number,
       required: true,
     },
-    status: { type: String,default: "OFFLINE"},
     lat: {
       type: Number,
       required: true,

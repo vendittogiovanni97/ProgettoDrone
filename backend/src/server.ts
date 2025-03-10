@@ -42,7 +42,6 @@ app.use(
 
 MQTTService.getInstance()
 
-//MQTTServiceProva.getInstance()
 addRoutes(app)
 
 const startServer = async () => {
