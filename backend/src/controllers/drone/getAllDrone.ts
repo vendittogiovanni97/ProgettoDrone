@@ -5,7 +5,6 @@ import { AppError } from "../../types/appError";
 import { responseStatus } from "../../constants/statusEnum";
 import { ErrorCodes } from "../../constants/errorCodes";
 import { AppSuccess } from "../../types/succesType";
-import { SuccessCodes } from "../../constants/succesCode";
 
 const getAllDrones = async (
   request: Request,

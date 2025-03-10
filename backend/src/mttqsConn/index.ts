@@ -55,14 +55,14 @@ export default class MQTTService {
       const uniqueId = topicParts[3];
       const data = JSON.parse(message.toString());
       const update = {
-        uniqueId,
+        //updateId
         status: "ONLINE",
         timestamp: new Date(), // Aggiorna il timestamp
         lat: data.lat,
         lon: data.lon,
         temperature: data.temperature,
       };
-      const options = { upsert: true, new: true }; // Opzioni per upsert
+      const options = {upsert: true, new: true }; // Opzioni per upsert
 
       const drone = new DroneHistory({
         deviceId,
