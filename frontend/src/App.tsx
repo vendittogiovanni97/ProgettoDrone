@@ -1,23 +1,25 @@
-import { BrowserRouter as  Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
-import LoginPage from './pages/Login';
-import DashboardPage from './pages/Dashboard';
-import RegisterPage from './pages/Register';
+
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import LoginPage from "./pages/Login.tsx";
+import RegisterPage from "./pages/Register";
+import ForgotPasswordPage from "./pages/ForgettedPassword";
+import DashboardPage from "./pages/Dashboard";
 
 function App() {
-  return (
-    <>
-    <BrowserRouter> 
-    <Routes>
-          <Route path="/login" element={<LoginPage/>} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path='/dashboard' element={<DashboardPage/>} />
-          {/* Reindirizza alla pagina di login se la route non è specificata */}
-          <Route path="/" element={<Navigate to="/login" replace />} />
-          {/* Altre route della tua applicazione... */}
-        </Routes>
-    </BrowserRouter>
-    </>
-  );
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<Navigate to="/login"/>}/>
+                <Route path="/login" element={<LoginPage/>}/>
+                <Route path="/register" element={<RegisterPage/>}/>
+                <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
+                <Route path="/dashboard" element={<DashboardPage/>}/>
+
+            </Routes>
+        </Router>
+    );
 }
 
+
 export default App;
+

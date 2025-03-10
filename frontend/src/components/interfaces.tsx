@@ -11,3 +11,12 @@ export interface DronePosition {
     Long: number;
     Mission: [];
 }
+
+export interface DroneMqtt
+{
+    id: string;
+    status: string;
+    temperature: number;
+    latitude: number;
+    longitude: number;
+}

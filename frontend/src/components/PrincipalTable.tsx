@@ -1,62 +1,96 @@
 import React, { useEffect, useState } from "react";
+import mqtt from "mqtt";
 import { AgGridReact } from "ag-grid-react";
-import { ModuleRegistry } from "ag-grid-community";
-import { ClientSideRowModelModule } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { ClientSideRowModelModule, ModuleRegistry, ColDef } from "ag-grid-community";
 
-// Registra i moduli
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
+// Definizione del tipo dei dati della tabella
+interface DroneData {
+    DeviceId: string;
+    temperature: string;
+}
+
 const PrincipalTableComponent: React.FC = () => {
-    const [droneData, setDroneData] = useState<any[]>([]);
+    const [droneData, setDroneData] = useState<DroneData[]>([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch("URL_API");
-                const data = await response.json();
-                setDroneData(data);
-            } catch (error) {
-                console.error("Errore nel recupero dati drone:", error);
-            }
-        };
+        const client = mqtt.connect("wss:nexustlc.ddns.net:443/mqtt", {
+            username: "ProgettoDroneClient",
+            password: "42286f739da8106ff3049807d1ac3fa5",
+        });
 
-        fetchData();
-        const interval = setInterval(fetchData, 10000);
-        return () => clearInterval(interval);
+        client.on("connect", () => {
+            console.log("Connesso a MQTT");
+            client.subscribe("Synapsy/drone/+/+");
+        });
+
+        client.on("message", (topic, message) => {
+            const topicParts = topic.split('/');
+            const deviceId = topicParts[2]; // Estrarre il DeviceId
+
+            const messageString = message.toString();
+
+            let messageJson;
+            try {
+                messageJson = JSON.parse(messageString);
+            } catch (error) {
+                console.error("Errore nel parsing del messaggio:", error);
+                return;
+            }
+
+            const temperature = messageJson?.temperature || "N/A";
+
+            setDroneData((prevData) => {
+                const existingIndex = prevData.findIndex((item) => item.DeviceId === deviceId);
+                if (existingIndex !== -1) {
+                    const updatedData = [...prevData];
+                    updatedData[existingIndex].temperature = temperature;
+                    return updatedData;
+                } else {
+                    return [...prevData, { DeviceId: deviceId, temperature }];
+                }
+            });
+        });
+
+        return () => {
+            client.end();
+        };
     }, []);
 
-    const columnDefs = [
-        { headerName: "DeviceId", field: "DeviceId", sortable: true, filter: true },
-        { headerName: "ID", field: "UniqueId", filter: true },
-        {
-            headerName: "Stato",
-            field: "status",
-            cellStyle: (params: any) => ({
-                color: params.value === "Online" ? "green" : "red",
-                fontWeight: "bold",
-            }),
-        },
-        { headerName: "Ultimo Dato Ricevuto", field: "lastData", sortable: true },
+    // Definizione tipizzata delle colonne
+    const columnDefs: ColDef<DroneData>[] = [
+        { headerName: "Device ID", field: "DeviceId", sortable: true, filter: true },
+        { headerName: "Ultima Temperatura (°C)", field: "temperature", sortable: true, filter: true },
     ];
 
     return (
-        <div className="ag-theme-alpine" style={{ height: 400, width: "100%" }}>
-            <AgGridReact rowData={droneData} columnDefs={columnDefs} pagination={true} />
-    <div className="details-container">
-        <button
-            className="details-button"
-            onClick={() => navigate("/vedi-dettagli")}
-        >
-            Vedi Dettagli
-        </button>
-    </div>
-    </div>
+        <div style={{ width: "100%" }}>
+            <h2 style={{ textAlign: "center", marginBottom: "10px" }}>Stato Droni</h2>
+            <div className="ag-theme-alpine" style={{ height: 300, width: "100%" }}>
+                <AgGridReact
+                    rowData={droneData}
+                    columnDefs={columnDefs}
+                    pagination={true}
+                    domLayout="autoHeight"
+                />
+            </div>
+            <div style={{ textAlign: "center", marginTop: "20px" }}>
+                <button className="details-button" onClick={() => navigate("/vedi-dettagli")}>
+                    Vedi Dettagli
+                </button>
+            </div>
+        </div>
     );
 };
 
 export default PrincipalTableComponent;
+
+
+
+
 
