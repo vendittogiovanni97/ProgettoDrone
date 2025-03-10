@@ -1,12 +1,12 @@
 import { z } from "zod";
 
-export const LoginSchemaZod = {
-  email: z.string().email(),
-  password : z.string().min(6)
-}
-
-export const RegisterSchemaZod = {
+export const LoginSchemaZod = z.object({
   email: z.string().email(),
   password: z.string().min(6),
-  username: z.string().min(5)
-}
+});
+
+export const RegisterSchemaZod = z.object({
+  email: z.string().email(),
+  password: z.string().min(6),
+  username: z.string().min(5),
+});

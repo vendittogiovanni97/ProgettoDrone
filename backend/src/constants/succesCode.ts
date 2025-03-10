@@ -1,0 +1,24 @@
+export const SuccessCodes = {
+    // Autenticazione e autorizzazione
+    LOGIN_SUCCESS: "LOGIN_SUCCESS",
+    LOGOUT_SUCCESS: "LOGOUT_SUCCESS",
+    SESSION_REFRESHED: "SESSION_REFRESHED",
+    
+    // Operazioni database
+    ENTITY_CREATED: "ENTITY_CREATED",
+    ENTITY_UPDATED: "ENTITY_UPDATED",
+    ENTITY_DELETED: "ENTITY_DELETED",
+    
+    // Operazioni utente
+    USER_REGISTERED: "USER_REGISTERED",
+    PASSWORD_RESET: "PASSWORD_RESET",
+    PROFILE_UPDATED: "PROFILE_UPDATED",
+    
+    // Servizio email
+    EMAIL_SENT: "EMAIL_SENT",
+    EMAIL_VERIFIED: "EMAIL_VERIFIED",
+    
+    // WebSocket
+    WS_CONNECTED: "WS_CONNECTED",
+    MESSAGE_SENT: "MESSAGE_SENT"
+    };
