@@ -8,7 +8,7 @@ import { AppSuccess } from "../../types/succesType";
 import { SuccessCodes } from "../../constants/succesCode";
 
 const getAllDrones = async (
-  request: Request<undefined, unknown, DronesInfo>,
+  request: Request,
   response: Response
 ): Promise<void> => {
   try {

@@ -7,3 +7,9 @@ export type DronesInfo = {
   status : string,
   timestamp: Date
 }
+
+export interface DronePosition {
+  deviceId: string,
+  lan: string,
+  lon: string
+}
