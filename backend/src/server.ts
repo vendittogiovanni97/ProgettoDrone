@@ -1,16 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
-import https from "https";
-import expressWs from "express-ws";
 import cors from "cors";
 import expressSession from "express-session";
 import { oggi } from "./configuration/time.config";
 import addRoutes from "./routers";
-import { WebSocketManager } from "./socket-io";
-import fs from "fs"
-import MQTTService from "./mttqsConn";
-import MQTTServiceProva from "./mttqsConn/prova";
-import connectDB from "./db/dbConfig";
+
 
 dotenv.config();
 
@@ -21,10 +15,6 @@ if (process.env.SESSION_SECRET === undefined) {
 }
 
 const app = express();
-const appws = expressWs(app);
-
-//const server = https.createServer({}, appws.app)
-
 
 app.use(express.json());
 app.use(
@@ -47,9 +37,6 @@ app.use(
     credentials: true,
   })
 );
-connectDB();
-//new WebSocketManager(server)
-// Ottieni l'istanza del servizio MQTT
 //MQTTService.getInstance()
 
 //MQTTServiceProva.getInstance()
