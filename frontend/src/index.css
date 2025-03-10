@@ -13,56 +13,358 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100vw;
   min-height: 100vh;
+  background-color: #888888;
+}
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top:60%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f4f7fa;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.login-container input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
+.login-checkbox {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+  margin-bottom: 10px;
+  color: black;
+}
+
+.login-checkbox input {
+  margin-bottom: 1px; /* Rimuovi margine sotto l'input */
+  margin-right: 10px; /* Distanza tra checkbox e la scritta "Ricordami" */
+}
+
+.login-checkbox span {
+  cursor: pointer;
+  color: blue;
+}
+
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  width: 100%;
+  padding: 10px;
+  background-color: #1266f1;
+  color: white;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: background-color 0.3s;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+button:hover {
+  background-color: #0a58ca;
 }
+
+a {
+  text-decoration: none;
+  color: #1266f1;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+.login-register p
+{
+  color:black;
+}
+
+/* Container principale della pagina */
+.register-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  width: 30vw;
+  padding: 20px;
+  background-color: #f4f7fa;
+  margin-top:40%;
+}
+
+/* Titolo della pagina */
+.register-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* Stile per gli input del modulo */
+.register-container input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.register-container input:focus {
+  border-color: #1266f1;
+  outline: none;
+}
+
+/* Stile per il messaggio di errore */
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+  font-size: 0.875rem;
+}
+
+/* Stile per i pulsanti */
+.register-container button {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px;
+  background-color: #1266f1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.register-container button:hover {
+  background-color: #0e54b1;
+}
+
+/* Link per il login */
+.register-container p {
+  margin-top: 15px;
+  font-size: 1rem;
+  color:black;
+}
+
+.register-container p span {
+  color: #1266f1;
+  cursor: pointer;
+}
+
+.register-container p span:hover {
+  text-decoration: underline;
+}
+/* Container principale della pagina */
+.forgot-password-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  width: 30vw;
+  padding: 20px;
+  background-color: #f4f7fa;
+  margin-top:40%;
+}
+
+/* Titolo della pagina */
+.forgot-password-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* Stile per gli input del modulo */
+.forgot-password-container input {
+  width: 100%;
+  max-width: 400px; /* Limita la larghezza massima degli input */
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.forgot-password-container input:focus {
+  border-color: #1266f1;
+  outline: none;
+}
+.forgot-password-container p
+{
+  color: black;
+}
+
+/* Stile per il messaggio di errore */
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+  font-size: 0.875rem;
+}
+
+/* Stile per i pulsanti */
+.forgot-password-container button {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px;
+  background-color: #1266f1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.forgot-password-container button:hover {
+  background-color: #0e54b1;
+}
+
+/* Link per il login */
+.forgot-password-container p {
+  margin-top: 15px;
+  font-size: 1rem;
+}
+
+.forgot-password-container p span {
+  color: #1266f1;
+  cursor: pointer;
+}
+
+.forgot-password-container p span:hover {
+  text-decoration: underline;
+}
+/*Stile Logout*/
+.logout-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+  width:5%;
+  margin-right:1%;
+}
+
+.logout-button:hover {
+  background-color: #cc0000;
+}
+
+/*Stile Navbar*/
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  color: white;
+  width: 100%;
+  height:6%;
+}
+
+.drone-logo {
+  height: 40px;
+  margin-left:0; !important
+}
+/*Stile Dashboard*/
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+.dashboard-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 50%;
+}
+.dashboard-table
+{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width:50%;
+  height:50%;
+}
+/* Stile generale per la griglia */
+
+.ag-theme-alpine {
+  width: 100%;
+  height: 400px; /* Imposta un'altezza fissa per la griglia */
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombra leggera per la tabella */
+}
+
+/* Stile per il pulsante */
+.details-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center; /* Centra il pulsante */
+}
+
+.details-button {
+  padding: 10px 20px;
+  background-color: #007bff; /* Colore blu */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: auto; /* Rendi il pulsante più piccolo */
+  min-width: 150px; /* Imposta una larghezza minima */
+}
+
+.details-button:hover {
+  background-color: #0056b3; /* Colore blu più scuro al passaggio del mouse */
+}
+
+/* Aggiungi uno sfondo alternato alle righe della tabella */
+.ag-theme-alpine .ag-row:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+/* Definisci un'altezza per la cella della tabella */
+.ag-theme-alpine .ag-cell {
+  height: 50px; /* Imposta un'altezza per le celle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Aggiungi uno spazio tra il pulsante e la tabella */
+.ag-theme-alpine + .details-container {
+  margin-top: 20px;
+}
+.leaflet-container {
+  height: 400px;
+  width: 100%;
+}
+
+
+
+
+
+
