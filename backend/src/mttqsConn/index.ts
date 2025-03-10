@@ -1,6 +1,8 @@
 ///Gestione classe con connessione ad mttqs, con interface mqttConfid
 import mqtt, { IClientOptions, MqttClient } from "mqtt";
 import mqttConfig from "../configuration/mqttsConfig";
+import DroneHistory, { Status } from "../models/droneSchemaHistory";
+import RealTimeDroneData from "../models/droneSchemaRealTime";
 
 export default class MQTTService {
   private static instance: MQTTService;
@@ -47,10 +49,32 @@ export default class MQTTService {
     );
 
     // Gestione dei messaggi in arrivo
-    this.client.on("message", (topic, message) => {
-      console.log(
-        `Messaggio ricevuto sul topic ${topic}: ${message.toString()}`
-      );
+    this.client.on("message", async (topic, message) => {
+      const topicParts = topic.split("/");
+      const deviceId = topicParts[2];
+      const uniqueId = topicParts[3];
+      const data = JSON.parse(message.toString());
+      const update = {
+        uniqueId,
+        status: Status.ONLINE,
+        timestamp: new Date(), // Aggiorna il timestamp
+        lat: data.lat,
+        lon: data.lon,
+        temperature: data.temperature,
+      };
+      const options = { upsert: true, new: true }; // Opzioni per upsert
+
+      const drone = new DroneHistory({
+        deviceId,
+        uniqueId,
+        status: Status.ONLINE,
+        lat: data.lat,
+        lon: data.lon,
+        temperature: data.temperature,
+      });
+      await drone.save();
+      await RealTimeDroneData.findOneAndUpdate({deviceId}, update, options);
+      console.log(`Dati salvati per il drone ${deviceId}`);
     });
 
     this.client.on("error", (err) => {
