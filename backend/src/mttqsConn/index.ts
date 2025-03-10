@@ -67,17 +67,16 @@ export default class MQTTService {
       const drone = new DroneHistory({
         deviceId,
         uniqueId,
-        status: "ONLINE",
         lat: data.lat,
         lon: data.lon,
         temperature: data.temperature,
       });
       await drone.save();
-      await RealTimeDroneData.findOneAndUpdate({deviceId}, update, options);
+      await RealTimeDroneData.updateOne({deviceId}, update, options);
       console.log(`Dati salvati per il drone ${deviceId}`);
 
       const timeout = setTimeout(async () => {
-        await RealTimeDroneData.findOneAndUpdate(
+        await RealTimeDroneData.updateOne(
           { deviceId },
           { status: "OFFLINE" },
           { new: true }
