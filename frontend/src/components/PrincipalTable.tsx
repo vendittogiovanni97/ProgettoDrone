@@ -70,8 +70,7 @@ const PrincipalTableComponent: React.FC = () => {
 
     return (
         <div style={{ width: "100%" }}>
-            <h2 style={{ textAlign: "center", marginBottom: "10px" }}>Stato Droni</h2>
-            <div className="ag-theme-alpine" style={{ height: 300, width: "100%" }}>
+            <div className="ag-theme-alpine" style={{ height: 250, width: "100%" }}>
                 <AgGridReact
                     rowData={droneData}
                     columnDefs={columnDefs}
