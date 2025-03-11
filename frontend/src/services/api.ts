@@ -26,7 +26,7 @@ export const backendFetch = async (
 
     const responseBody = await fetchResult.json();
     const responseDetails= responseBody.details
-    //console.log("RESPONSE FETCH ", fetchResult, responseBody);
+    console.log("RESPONSE FETCH ", fetchResult, responseBody);
 
     return { fetchResult, responseBody, responseDetails };
   } catch (error) {

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { FormEventHandler, useContext, useState } from "react";
 import "./css/register.css";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../context/Auth.Provider";
 import { RegisterForm } from "../types/Register.Form.Type";
 
@@ -9,6 +9,7 @@ export function RegisterPages() {
   const { register } = useContext(AuthContext);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -32,13 +33,14 @@ export function RegisterPages() {
       setError("Si è verificato un errore durante la registrazione.");
       console.error(err);
     }
+    alert("Registrazione avvenuta con successo!");
+    navigate("/login");
   };
 
   return (
     <div className="register-container">
       <h2>Registrazione</h2>
       <form onSubmit={handleSubmit}>
-
         <div>
           <label htmlFor="username">Username:</label>
           <input type="text" id="username" name="username" required />

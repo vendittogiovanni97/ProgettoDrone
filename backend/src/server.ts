@@ -40,7 +40,7 @@ app.use(
   })
 );
 
-MQTTService.getInstance()
+//MQTTService.getInstance()
 
 addRoutes(app)
 

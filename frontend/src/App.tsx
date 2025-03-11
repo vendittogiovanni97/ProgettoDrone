@@ -3,7 +3,7 @@ import ForgotPasswordPage from "./pages/ForgettedPassword";
 import DashboardPage from "./pages/Dashboard";
 import { LoginPages } from "./pages/LoginPages.tsx";
 import { RegisterPages } from "./pages/RegisterPages.tsx";
-
+import './App.css'
 function App() {
     return (
         <Router>
