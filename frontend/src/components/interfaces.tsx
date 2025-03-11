@@ -1,8 +1,6 @@
 export interface DroneData {
     DeviceId: string;
-    UniqueId: string;
-    status: "Online" | "Offline";                                   //Interfaccia per La Tabella
-    lastData: string;
+    temperature: string;
 }
 
 export interface DronePosition {

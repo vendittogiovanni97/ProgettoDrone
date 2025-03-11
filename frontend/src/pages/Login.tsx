@@ -51,8 +51,15 @@ const LoginPage: React.FC = () => {
         navigate("/dashboard"); // Reindirizzamento alla Dashboard
     };
 
+    // Funzione per rilevare il tasto "Enter"
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === "Enter") {
+            handleLogin();
+        }
+    };
+
     return (
-        <div className="login-container">
+        <div className="login-container" onKeyDown={handleKeyDown} tabIndex={0}>
             <input
                 type="email"
                 placeholder="Email"

@@ -5,18 +5,30 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { useNavigate } from "react-router-dom";
 import { ClientSideRowModelModule, ModuleRegistry, ColDef } from "ag-grid-community";
+import {DroneData} from "./interfaces"
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
-// Definizione del tipo dei dati della tabella
-interface DroneData {
-    DeviceId: string;
-    temperature: string;
-}
+// Componente personalizzato per l'header con il pulsante
+const CustomHeader: React.FC = () => {
+    const navigate = useNavigate();
+    return (
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span>Device ID</span>
+            <button
+                style={{ marginLeft: "10px", padding: "5px 10px", cursor: "pointer" }}
+                onClick={() => navigate("/vedi-dettagli")}
+            >
+                Vedi Dettagli
+            </button>
+        </div>
+    );
+};
+
 
 const PrincipalTableComponent: React.FC = () => {
     const [droneData, setDroneData] = useState<DroneData[]>([]);
-    const navigate = useNavigate();
+
 
     useEffect(() => {
         const client = mqtt.connect("wss:nexustlc.ddns.net:443/mqtt", {
@@ -62,11 +74,18 @@ const PrincipalTableComponent: React.FC = () => {
         };
     }, []);
 
-    // Definizione tipizzata delle colonne
+    // Definizione tipizzata delle colonne con header personalizzato
     const columnDefs: ColDef<DroneData>[] = [
-        { headerName: "Device ID", field: "DeviceId", sortable: true, filter: true },
+        {
+            headerName: "",
+            field: "DeviceId",
+            sortable: true,
+            filter: true,
+            headerComponent: CustomHeader // Aggiungi il componente personalizzato
+        },
         { headerName: "Ultima Temperatura (°C)", field: "temperature", sortable: true, filter: true },
     ];
+
 
     return (
         <div style={{ width: "100%" }}>
@@ -77,11 +96,6 @@ const PrincipalTableComponent: React.FC = () => {
                     pagination={true}
                     domLayout="autoHeight"
                 />
-            </div>
-            <div style={{ textAlign: "center", marginTop: "20px" }}>
-                <button className="details-button" onClick={() => navigate("/vedi-dettagli")}>
-                    Vedi Dettagli
-                </button>
             </div>
         </div>
     );
