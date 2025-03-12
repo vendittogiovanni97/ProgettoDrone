@@ -1,5 +1,4 @@
 ///Gestione classe con connessione ad mttqs, con interface mqttConfid
-import mttqConfig from "../configuration/mqttsConfig";
 import mqtt, { IClientOptions, MqttClient } from "mqtt";
 
 export default class MQTTServiceProva {
