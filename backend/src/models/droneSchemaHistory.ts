@@ -1,4 +1,3 @@
-import { timeStamp } from "console";
 import mongoose from "mongoose";
 
 const { Schema, model } = mongoose;
@@ -14,7 +13,6 @@ const DroneHistorySchema = new Schema(
       type: Number,
       required: true,
     },
-    status: { type: String,default: "OFFLINE"},
     lat: {
       type: Number,
       required: true,

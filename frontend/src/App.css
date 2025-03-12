@@ -1,42 +1,356 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* Modern Drone Monitoring Dashboard CSS - 2025 Edition */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary: #0062cc;
+  --primary-light: #4a89dc;
+  --primary-dark: #004494;
+  --secondary: #5bc0de;
+  --dark: #2c3e50;
+  --light: #f8f9fa;
+  --success: #5cb85c;
+  --danger: #d9534f;
+  --warning: #f0ad4e;
+  --grey-light: #e9ecef;
+  --grey: #adb5bd;
+  --transition: all 0.3s ease;
+  --box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body, html {
+  background-color: #f5f7fa;
+  height: 100%;
+  color: var(--dark);
+}
+
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: white;
+  padding: 0.75rem 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.drone-logo {
+  height: 40px;
+  transition: var(--transition);
+}
+
+.drone-logo:hover {
+  filter: brightness(1.2);
+}
+
+/* Login Container */
+.login-container {
+  max-width: 450px;
+  width: 90%;
+  margin: 80px auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+  padding: 2.5rem;
+  position: relative;
+  border-top: 4px solid var(--primary);
+}
+
+.login-container input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 18px;
+  border: 1px solid var(--grey-light);
+  border-radius: 8px;
+  font-size: 15px;
+  background-color: #f9fafc;
+  transition: var(--transition);
+}
+
+.login-container input:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 98, 204, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Buttons */
+button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
   text-align: center;
+  font-size: 15px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.login-container button, 
+.details-button {
+  width: 100%;
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 98, 204, 0.2);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.login-container button:hover, 
+.details-button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 98, 204, 0.3);
+}
+
+.details-button {
+  width: auto;
+  padding: 10px 25px;
+  margin: 20px 0;
+}
+
+.logout-button {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.logout-button:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.dashboard-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Map Component */
+.leaflet-container {
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+  margin-bottom: 1.5rem;
+  height: 450px !important;
+  border: 1px solid var(--grey-light);
+  overflow: hidden;
+}
+
+.leaflet-marker-icon {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 98, 204, 0.7);
   }
-  to {
-    transform: rotate(360deg);
+  
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(0, 98, 204, 0);
+  }
+  
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 98, 204, 0);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* Table Styling */
+.dashboard-table {
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.ag-theme-alpine {
+  --ag-background-color: transparent;
+  --ag-odd-row-background-color: #f9fafc;
+  --ag-header-background-color: #eef2f7;
+  --ag-border-color: #e9ecef;
+  --ag-row-hover-color: rgba(74, 137, 220, 0.1);
+  --ag-selected-row-background-color: rgba(74, 137, 220, 0.2);
+  font-family: 'Poppins', sans-serif;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ag-header-cell {
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+.ag-row {
+  transition: background-color 0.2s;
+}
+
+/* Device status indicators */
+.status-online {
+  background-color: rgba(92, 184, 92, 0.2);
+  color: var(--success);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+}
+
+.status-online::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: var(--success);
+  border-radius: 50%;
+  margin-right: 6px;
+  animation: pulse 2s infinite;
+}
+
+.status-offline {
+  background-color: rgba(217, 83, 79, 0.1);
+  color: var(--danger);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+}
+
+.status-offline::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: var(--danger);
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+/* Temperature styling */
+.temp-normal {
+  color: var(--success);
+  font-weight: 500;
+}
+
+.temp-warning {
+  color: var(--warning);
+  font-weight: 500;
+}
+
+.temp-danger {
+  color: var(--danger);
+  font-weight: 500;
+}
+
+/* Popup styling */
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  padding: 12px;
+}
+
+.popup-header {
+  background-color: var(--primary);
+  color: white;
+  padding: 10px 12px;
+  font-weight: 600;
+  margin: -12px -12px 10px -12px;
+}
+
+.popup-info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 5px 10px;
+}
+
+.popup-label {
+  font-weight: 500;
+  color: var(--dark);
+}
+
+.popup-value {
+  color: var(--primary-dark);
+  font-weight: 500;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.5rem 1rem;
+  }
+  
+  .dashboard-content {
+    padding: 1rem;
+  }
+  
+  .leaflet-container {
+    height: 350px !important;
+  }
+  
+  .dashboard-table {
+    padding: 1rem;
+  }
+
+  .drone-logo {
+    height: 32px;
   }
 }
 
-.card {
-  padding: 2em;
+/* Custom popup for map */
+.drone-popup {
+  background: white;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
 }
 
-.read-the-docs {
-  color: #888;
+.drone-popup h3 {
+  margin: 0;
+  padding: 10px;
+  background: var(--primary);
+  color: white;
+}
+
+.drone-popup-content {
+  padding: 10px;
+}
+
+/* Override popup styling */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  padding: 0;
 }

@@ -2,10 +2,10 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import expressSession from "express-session";
-import { oggi } from "./configuration/time.config";
 import addRoutes from "./routers";
 import connectDB from "./db/dbConfig";
 import MQTTService from "./mttqsConn";
+import { oggi } from "./configuration/time.config";
 
 
 dotenv.config();
@@ -40,15 +40,14 @@ app.use(
   })
 );
 
-MQTTService.getInstance()
+//MQTTService.getInstance()
 
-//MQTTServiceProva.getInstance()
 addRoutes(app)
 
 const startServer = async () => {
   await connectDB();
   app.listen(port, () => {
-    console.log(`Server in ascolto sulla porta ${port}`)
+    console.log(`Server in ascolto sulla porta ${port}, ${oggi}`)
   })
 }
 

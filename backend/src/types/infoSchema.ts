@@ -4,8 +4,6 @@ export type LoginInfo = {
 };
 
 export type RegisterInfo = {
-  firstname?: string;
-  lastname?: string;
   email: string;
   password: string;
   username: string;

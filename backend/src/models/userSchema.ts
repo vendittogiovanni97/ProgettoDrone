@@ -9,6 +9,6 @@ const User = new Schema({
 })
 
 const Users = model("users",  User)
-
+console.log('Creazione schema users', Users)
 
 export default Users

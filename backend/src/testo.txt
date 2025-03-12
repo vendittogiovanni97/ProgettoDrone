@@ -1,0 +1,36 @@
+Ecco una panoramica generale dell'architettura del tuo progetto:
+
+Architettura del sistema:
+
+Backend in Node.js/Express con TypeScript
+Database MongoDB per memorizzare utenti e dati dei droni
+Connessione MQTT per ricevere dati in tempo reale dai droni
+API REST per l'interazione con il frontend
+
+
+Funzionalità principali:
+
+Autenticazione utenti (login, logout, registrazione)
+Gestione sessioni
+Ricezione e memorizzazione dati droni in tempo reale
+Memorizzazione storica dei dati droni
+Gestione dello stato online/offline dei droni
+
+
+Pattern utilizzati:
+
+Singleton per gestire connessione MQTT e sessioni
+MVC (Model-View-Controller) per l'organizzazione del codice
+Error handling centralizzato con tipi personalizzati
+Repository pattern per l'accesso ai dati
+
+
+
+Il backend è strutturato secondo un'architettura MVC (Model-View-Controller), con una chiara separazione delle responsabilità. I modelli (nella cartella "models") definiscono gli schemi dei dati, 
+i controller gestiscono la logica di business per ogni endpoint, e i router organizzano le API REST. Il sistema include gestione delle sessioni, connessione MQTT per i dati dei droni in tempo reale, e un sistema di 
+risposta standardizzato con classi per errori e successi. L'applicazione utilizza pattern Singleton per servizi critici come connessioni database e MQTT.
+
+
+Il database è progettato con una struttura a due livelli per i dati dei droni: una collezione storica "drone_history" che conserva tutte le letture nel tempo e una collezione "real_time_drone_data" 
+che mantiene solo lo stato corrente di ogni drone. Questo approccio permette sia l'analisi storica sia il monitoraggio in tempo reale ottimizzando le query. Gli schemi sono stati definiti con mongoose per garantire 
+consistenza dei dati, con campi obbligatori e vincoli di unicità per deviceId e uniqueId.
