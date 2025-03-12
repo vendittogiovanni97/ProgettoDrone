@@ -7,7 +7,6 @@ import connectDB from "./db/dbConfig";
 import MQTTService from "./mttqsConn";
 import { oggi } from "./configuration/time.config";
 
-
 dotenv.config();
 
 const port = process.env.PORT;
@@ -40,15 +39,15 @@ app.use(
   })
 );
 
-//MQTTService.getInstance()
+MQTTService.getInstance();
 
-addRoutes(app)
+addRoutes(app);
 
 const startServer = async () => {
   await connectDB();
   app.listen(port, () => {
-    console.log(`Server in ascolto sulla porta ${port}, ${oggi}`)
-  })
-}
+    console.log(`Server in ascolto sulla porta ${port}, ${oggi}`);
+  });
+};
 
-startServer()
+startServer();

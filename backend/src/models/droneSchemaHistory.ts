@@ -12,6 +12,7 @@ const DroneHistorySchema = new Schema(
     uniqueId: {
       type: Number,
       required: true,
+      index: true,
     },
     lat: {
       type: Number,

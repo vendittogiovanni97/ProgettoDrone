@@ -6,8 +6,8 @@ const { Schema, model } = mongoose;
 const RealTimeDroneDataSchema = new Schema(
   {
     deviceId: { type: String, unique: true, required: true },
-    uniqueId: { type: Number, unique: true},
-    status: { type: String, default: "OFFLINE "},
+    uniqueId: { type: Number, unique: true, index: true },
+    status: { type: String, default: "OFFLINE " },
     lat: { type: Number, required: true }, // Latitudine
     lon: { type: Number, required: true }, // Longitudine
     temperature: { type: Number, required: true }, // Temperatura del drone
@@ -18,6 +18,5 @@ const RealTimeDroneDataSchema = new Schema(
 
 const RealTimeDroneData = model("RealTimeDroneData", RealTimeDroneDataSchema);
 console.log("Schema creato", RealTimeDroneData);
-
 
 export default RealTimeDroneData;
