@@ -3,7 +3,7 @@ import getDroneById from "../controllers/drone/getDroneId";
 import getAllDrones from "../controllers/drone/getAllDrone";
 import getAllDronesPositions from "../controllers/drone/getAllDronePositions";
 import getDroneHistory from "../controllers/drone/getDroneHistory";
-import getDroneTrackById from "../controllers/drone/getTrack";
+import getDroneTrackById from "../controllers/drone/getTrackId";
 
 const droneRouter = (app: Router) => {
   const router = Router();

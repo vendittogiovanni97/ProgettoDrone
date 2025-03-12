@@ -4,11 +4,9 @@ import { AppError } from "../../types/appError";
 import { responseStatus } from "../../constants/statusEnum";
 import { ErrorCodes } from "../../constants/errorCodes";
 import { AppSuccess } from "../../types/succesType";
-import { number } from "zod";
 
 /**
  * Ottiene i dati di una specifica tratta di missione del drone
- * con calcolo di temperatura minima e massima
  */
 const getDroneTrackById = async (
   request: Request,
@@ -29,7 +27,7 @@ const getDroneTrackById = async (
     // Recupera i dati della tratta dal database
     const trackData = await DroneHistory.find({ uniqueId }).select("-__v");
 
-    if (!trackData || trackData.length === 0) {
+    if (!trackData) {
       throw new AppError(
         responseStatus.NOT_FOUND,
         ErrorCodes.ENTITY_NOT_FOUND,
@@ -37,37 +35,12 @@ const getDroneTrackById = async (
       );
     }
 
-    // Calcola temperatura minima e massima usando un ciclo for
-    let minTemp = Infinity;
-    let maxTemp = -Infinity;
-
-    for (let i = 0; i < trackData.length; i++) {
-      if (trackData[i].temperature !== undefined) {
-        if (Number(trackData[i].temperature) < minTemp)
-          minTemp = Number(trackData[i].temperature);
-        if (Number(trackData[i].temperature) > maxTemp)
-          maxTemp = Number(trackData[i].temperature);
-      }
-    }
-
-    // Se non ci sono dati di temperatura validi
-    if (minTemp === Infinity || maxTemp === -Infinity) {
-      minTemp = 0;
-      maxTemp = 0;
-    }
-
-    // Invia la risposta con i dati della tratta e le temperature min/max
+    // Invia la risposta con i dati della tratta
     AppSuccess.getInstance().successResponse(
       response,
       "Dati della tratta recuperati con successo",
       responseStatus.OK,
-      {
-        trackData,
-        temperatureStats: {
-          min: minTemp,
-          max: maxTemp,
-        },
-      }
+      { trackData }
     );
   } catch (error) {
     if (error instanceof AppError) {
