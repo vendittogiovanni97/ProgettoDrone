@@ -5,6 +5,28 @@ import { responseStatus } from "../../constants/statusEnum";
 import { ErrorCodes } from "../../constants/errorCodes";
 import { AppSuccess } from "../../types/succesType";
 
+// Funzione per formattare la durata in ore, minuti e secondi
+
+function formatDuration(seconds: number): string {
+  if (seconds == null) return "N/A";
+
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = Math.floor(seconds % 60);
+
+  let dataFormatted = "";
+
+  if (hours > 0) {
+    dataFormatted += `${hours}h `;
+  }
+  if (minutes > 0 || hours > 0) {
+    dataFormatted += `${minutes}m `;
+  }
+  dataFormatted += `${secs}s`;
+
+  return dataFormatted.trim();
+}
+
 /**
  * Ottiene i dati di una specifica tratta di missione del drone
  * con calcolo di temperatura minima e massima
@@ -73,6 +95,9 @@ const getDroneTrackById = async (
     const duration =
       endTime && startTime ? endTime.getTime() - startTime.getTime() : null;
 
+    // Formatta la durata in ore, minuti e secondi
+    const dataFormatted = duration ? formatDuration(duration / 1000) : "N/A";
+
     // Invia la risposta con i dati della tratta e le temperature min/max
     AppSuccess.getInstance().successResponse(
       response,
@@ -87,7 +112,7 @@ const getDroneTrackById = async (
         positionData,
         startTime: startTime?.toISOString(), // Formatta l'orario di inizio
         endTime: endTime?.toISOString(), // Formatta l'orario di fine
-        duration: duration ? duration / 1000 : null, // Durata in secondi
+        dataFormatted, // Durata formattata in ore, minuti e secondi
       }
     );
   } catch (error) {
