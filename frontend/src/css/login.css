@@ -9,11 +9,7 @@
 }
 
 body, html {
-  background-color: #121824;
-  height: 100%;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)), 
-                    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50,35 L60,45 L50,55 L40,45 Z" fill="none" stroke="rgba(0, 147, 233, 0.1)" stroke-width="1"/></svg>');
-  background-size: 100px 100px;
+  background: linear-gradient(to bottom, #F0FDD9, #DCF9A8, #A8D46E);
 }
 
 .login-container {
@@ -26,9 +22,14 @@ body, html {
   padding: 30px;
   position: relative;
   border-top: 4px solid #0093E9;
+
 }
 
-/* Logo rimosso come richiesto */
+.login-container h1
+{
+  color:black;
+  align-items:center;
+}
 
 .login-container input {
   width: 100%;
@@ -181,6 +182,63 @@ body, html {
   background-color: #4ade80;
   box-shadow: 0 0 5px #4ade80;
   animation: pulse 2s infinite;
+}
+
+.login-container input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.login-checkbox {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+  margin-bottom: 10px;
+  color: black;
+}
+
+.login-checkbox input {
+  margin-bottom: 1px; /* Rimuovi margine sotto l'input */
+  margin-right: 10px; /* Distanza tra checkbox e la scritta "Ricordami" */
+}
+
+.login-checkbox span {
+  cursor: pointer;
+  color: #0093E9 !important;
+}
+
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #1266f1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right:0 !important;
+}
+
+button:hover {
+  background-color: #0a58ca;
+}
+
+a {
+  text-decoration: none;
+  color: #1266f1;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+.login-register p
+{
+  color:black;
 }
 
 @keyframes pulse {

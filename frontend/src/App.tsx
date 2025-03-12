@@ -2,8 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import ForgotPasswordPage from "./pages/ForgettedPassword";
 import DashboardPage from "./pages/Dashboard";
 import { LoginPages } from "./pages/LoginPages.tsx";
-import { RegisterPages } from "./pages/RegisterPages.tsx";
-import './App.css'
+import { RegisterPages } from "./pages/RegisterPages.tsx";;
 function App() {
     return (
         <Router>

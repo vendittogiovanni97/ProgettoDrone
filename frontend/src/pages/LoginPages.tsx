@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import "./css/login.css";
+import "../css/login.css";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../context/Auth.Provider";
 import { LoginForm } from "../types/Login.Form.Type";
@@ -38,6 +38,12 @@ export function LoginPages() {
         placeholder="inserisci password"
       />
       <button onClick={handleSubmit}>Login</button>
+        <span
+            onClick={() => navigate("/forgot-password")}
+            style={{ color: "blue", cursor: "pointer" }}
+        >
+        Password Dimenticata?
+    </span>
       <p>
         Non hai un account? <Link to="/register">Registrati</Link>
       </p>

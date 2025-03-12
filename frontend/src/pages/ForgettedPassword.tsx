@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../css/forgetPassword.css"
 
 // Funzione di validazione per l'email
 const validazioneEmail = (email: string) => {

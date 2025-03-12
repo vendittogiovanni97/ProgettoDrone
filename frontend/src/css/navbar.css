@@ -1,0 +1,43 @@
+
+/*Stile Navbar*/
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #DCF9A8;
+    width: 100vw;
+    min-height: 30px; /* Evita che sia troppo bassa su schermi piccoli */
+    transition: background-color 0.3s ease-in-out;
+    border-radius: 5px;
+}
+
+.navbar:hover {
+    background-color: rgba(0, 0, 0, 0.9); /* Leggera trasparenza all'hover */
+}
+
+.drone-logo {
+    height: 40px;
+    margin-left: 0 !important; /* Fix sintassi */
+    transition: transform 0.2s ease-in-out;
+}
+
+.drone-logo:hover {
+    transform: scale(1.1); /* Leggero ingrandimento all'hover */
+}
+
+/*Stile Logout*/
+.logout-button {
+    background-color: #ff4d4d;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    width:5%;
+    margin-right: 1% !important;
+
+}
+
+.logout-button:hover {
+    background-color: #cc0000;
+}
