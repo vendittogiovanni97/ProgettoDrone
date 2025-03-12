@@ -69,6 +69,8 @@ const getDroneTrackById = async (
     const temperatureData: number[] = [];
     const positionData: { lat: number; lon: number }[] = [];
 
+    const timestampData: Date[] = []; // Array per memorizzare i timestamp
+
     // Estrai i dati in un unico ciclo
     trackData.forEach((data) => {
       const temperature = Number(data.temperature);
@@ -83,6 +85,7 @@ const getDroneTrackById = async (
 
       // Aggiorna l'orario di inizio e fine
       const currentTimestamp = new Date(data.timestamp);
+      timestampData.push(currentTimestamp); // Aggiungi il timestamp all'array
       if (!startTime || currentTimestamp < startTime) {
         startTime = currentTimestamp; // Aggiorna l'orario di inizio se è il primo o è più vecchio
       }
@@ -110,6 +113,7 @@ const getDroneTrackById = async (
         },
         temperatureData,
         positionData,
+        timestampData,
         startTime: startTime?.toISOString(), // Formatta l'orario di inizio
         endTime: endTime?.toISOString(), // Formatta l'orario di fine
         dataFormatted, // Durata formattata in ore, minuti e secondi
