@@ -13,9 +13,9 @@ const droneRouter = (app: Router) => {
 
   router.get("/dronesPositions", getAllDronesPositions); //rest/mqtt/dronesPositions---Ottiene posizioni
 
-  router.get("/historyDrone", getDroneHistory);
+  router.get("/historyDrone", getDroneHistory); //rest/mqtt/historyDrone --- Ottiene tutto lo storico dei droni
 
-  router.get("/track/:uniqueId", getDroneTrackById);
+  router.get("/track/:uniqueId", getDroneTrackById); //rest/mqtt/track/:uniqueId --- Ottiene la tratta della missione
 
   app.use("/mqtt", router);
 };

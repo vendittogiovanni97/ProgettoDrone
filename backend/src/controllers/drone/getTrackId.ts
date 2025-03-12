@@ -35,23 +35,26 @@ const getDroneTrackById = async (
         "Tratta non trovata"
       );
     }
-    // Estrai i dati di temperatura (solo valori numerici)
-    const temperatureData = trackData.map((data) => Number(data.temperature));
 
-    const positionData = trackData.map((data) => ({
-      lat: data.lat,
-      lon: data.lon,
-    }));
+    // Inizializza variabili per il calcolo della temperatura minima e massima
+    let minTemp = 0;
+    let maxTemp = -0;
 
-    //Estrai e converti le temperature in numeri
-    const temperatures = trackData
-      .map((data) => data.temperature)
-      //.filter((temp) => temp !== undefined) // Filtra valori undefined
-      .map((temp) => Number(temp)); // Converti le temperature in numeri
+    const temperatureData: number[] = [];
+    const positionData: { lat: number; lon: number }[] = [];
 
-    //Calcola temperatura minima e massima
-    const minTemp = Math.min(...temperatures);
-    const maxTemp = Math.max(...temperatures);
+    // Estrai i dati in un unico .map
+    trackData.forEach((data) => {
+      const temperature = Number(data.temperature);
+
+      // Aggiorna la temperatura minima e massima
+      if (temperature < minTemp) minTemp = temperature;
+      if (temperature > maxTemp) maxTemp = temperature;
+
+      // Aggiungi i dati agli array
+      temperatureData.push(temperature);
+      positionData.push({ lat: data.lat, lon: data.lon });
+    });
 
     // Invia la risposta con i dati della tratta e le temperature min/max
     AppSuccess.getInstance().successResponse(
@@ -59,11 +62,11 @@ const getDroneTrackById = async (
       "Dati della tratta recuperati con successo",
       responseStatus.OK,
       {
-        temperatureData,
         temperatureStats: {
           min: minTemp,
           max: maxTemp,
         },
+        temperatureData,
         positionData,
       }
     );

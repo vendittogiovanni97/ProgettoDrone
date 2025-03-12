@@ -40,19 +40,6 @@ export default class MQTTService {
       }
     });
 
-    // Invia un messaggio di test al topic
-    /*this.client.publish(
-      mqttConfig.topicPrefix,
-      "Ciao, questo è un messaggio di prova",
-      (err) => {
-        if (!err) {
-          console.log("Messaggio pubblicato con successo");
-        } else {
-          console.error("❌ Errore durante la pubblicazione:", err);
-        }
-      }
-    ); */
-
     // Mappa per tenere traccia dello stato dei droni e relativi timeout
     const droneStatus = new Map();
 
@@ -85,7 +72,9 @@ export default class MQTTService {
         lat: data.lat,
         lon: data.lon,
         temperature: data.temperature,
+        timestamp: new Date(),
       });
+
       await drone.save();
 
       // Aggiorna o crea record in tempo reale
