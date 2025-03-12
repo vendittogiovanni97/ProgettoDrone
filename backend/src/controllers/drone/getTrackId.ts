@@ -38,12 +38,16 @@ const getDroneTrackById = async (
 
     // Inizializza variabili per il calcolo della temperatura minima e massima
     let minTemp = 0;
-    let maxTemp = -0;
+    let maxTemp = 0;
+
+    // Inizializza variabili per l'orario di inizio e fine
+    let startTime: Date = new Date();
+    let endTime: Date = new Date();
 
     const temperatureData: number[] = [];
     const positionData: { lat: number; lon: number }[] = [];
 
-    // Estrai i dati in un unico .map
+    // Estrai i dati in un unico ciclo
     trackData.forEach((data) => {
       const temperature = Number(data.temperature);
 
@@ -54,7 +58,20 @@ const getDroneTrackById = async (
       // Aggiungi i dati agli array
       temperatureData.push(temperature);
       positionData.push({ lat: data.lat, lon: data.lon });
+
+      // Aggiorna l'orario di inizio e fine
+      const currentTimestamp = new Date(data.timestamp);
+      if (!startTime || currentTimestamp < startTime) {
+        startTime = currentTimestamp; // Aggiorna l'orario di inizio se è il primo o è più vecchio
+      }
+      if (!endTime || currentTimestamp > endTime) {
+        endTime = currentTimestamp; // Aggiorna l'orario di fine se è il primo o è più recente
+      }
     });
+
+    // Calcola la durata della tratta (in millisecondi)
+    const duration =
+      endTime && startTime ? endTime.getTime() - startTime.getTime() : null;
 
     // Invia la risposta con i dati della tratta e le temperature min/max
     AppSuccess.getInstance().successResponse(
@@ -68,6 +85,9 @@ const getDroneTrackById = async (
         },
         temperatureData,
         positionData,
+        startTime: startTime?.toISOString(), // Formatta l'orario di inizio
+        endTime: endTime?.toISOString(), // Formatta l'orario di fine
+        duration: duration ? duration / 1000 : null, // Durata in secondi
       }
     );
   } catch (error) {
