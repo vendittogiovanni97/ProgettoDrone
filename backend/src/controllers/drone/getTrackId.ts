@@ -4,7 +4,6 @@ import { AppError } from "../../types/appError";
 import { responseStatus } from "../../constants/statusEnum";
 import { ErrorCodes } from "../../constants/errorCodes";
 import { AppSuccess } from "../../types/succesType";
-import { number } from "zod";
 
 /**
  * Ottiene i dati di una specifica tratta di missione del drone
@@ -36,25 +35,23 @@ const getDroneTrackById = async (
         "Tratta non trovata"
       );
     }
+    // Estrai i dati di temperatura (solo valori numerici)
+    const temperatureData = trackData.map((data) => Number(data.temperature));
 
-    // Calcola temperatura minima e massima usando un ciclo for
-    let minTemp = Infinity;
-    let maxTemp = -Infinity;
+    const positionData = trackData.map((data) => ({
+      lat: data.lat,
+      lon: data.lon,
+    }));
 
-    for (let i = 0; i < trackData.length; i++) {
-      if (trackData[i].temperature !== undefined) {
-        if (Number(trackData[i].temperature) < minTemp)
-          minTemp = Number(trackData[i].temperature);
-        if (Number(trackData[i].temperature) > maxTemp)
-          maxTemp = Number(trackData[i].temperature);
-      }
-    }
+    //Estrai e converti le temperature in numeri
+    const temperatures = trackData
+      .map((data) => data.temperature)
+      //.filter((temp) => temp !== undefined) // Filtra valori undefined
+      .map((temp) => Number(temp)); // Converti le temperature in numeri
 
-    // Se non ci sono dati di temperatura validi
-    if (minTemp === Infinity || maxTemp === -Infinity) {
-      minTemp = 0;
-      maxTemp = 0;
-    }
+    //Calcola temperatura minima e massima
+    const minTemp = Math.min(...temperatures);
+    const maxTemp = Math.max(...temperatures);
 
     // Invia la risposta con i dati della tratta e le temperature min/max
     AppSuccess.getInstance().successResponse(
@@ -62,11 +59,12 @@ const getDroneTrackById = async (
       "Dati della tratta recuperati con successo",
       responseStatus.OK,
       {
-        trackData,
+        temperatureData,
         temperatureStats: {
           min: minTemp,
           max: maxTemp,
         },
+        positionData,
       }
     );
   } catch (error) {
