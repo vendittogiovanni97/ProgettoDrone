@@ -11,13 +11,18 @@
   },
   "dependencies": {
     "@ag-grid-community/client-side-row-model": "^32.3.4",
+    "@ag-grid-community/styles": "^32.3.4",
     "ag-grid-community": "^33.1.1",
     "ag-grid-react": "^33.1.1",
     "bootstrap": "^5.3.3",
+    "echarts": "^5.6.0",
+    "echarts-for-react": "^3.0.3",
     "leaflet": "^1.9.4",
     "mqtt": "^5.10.4",
     "react": "^19.0.0",
+    "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",
+    "react-echarts": "^0.1.1",
     "react-leaflet": "^5.0.0",
     "react-router-dom": "^7.3.0"
   },

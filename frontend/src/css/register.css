@@ -12,7 +12,7 @@
 
 /* Stile per il titolo */
 .register-container h2 {
-  font-size: 28px;
+  font-size: 18px;
   margin-bottom: 20px;
   color: #00796b; /* Verde scuro */
   font-family: 'Arial', sans-serif;
@@ -22,7 +22,7 @@
 
 /* Stile per i campi del form */
 .register-container form div {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   text-align: left;
 }
 
@@ -31,7 +31,7 @@
   margin-bottom: 8px;
   font-weight: bold;
   color: #00695c; /* Verde scuro */
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .register-container input {
@@ -39,7 +39,7 @@
   padding: 12px;
   border: 2px solid #80deea; /* Bordo azzurro */
   border-radius: 6px;
-  font-size: 16px;
+  font-size: 14px;
   box-sizing: border-box;
   background-color: #f0f8ff; /* Azzurro chiaro */
   color: #004d40; /* Verde scuro */
@@ -59,11 +59,12 @@
   color: #fff;
   border: none;
   border-radius: 6px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
+
 
 .register-container button:hover {
   background-color: #0097a7; /* Turchese scuro */
@@ -77,7 +78,7 @@
 /* Stile per il link di accesso */
 .register-container p {
   margin-top: 20px;
-  font-size: 16px;
+  font-size: 14px;
   color: #00796b; /* Verde scuro */
 }
 
@@ -95,7 +96,7 @@
 /* Stile per i messaggi di errore */
 .error-message {
   color: #d32f2f; /* Rosso */
-  font-size: 14px;
+  font-size: 12px;
   margin-top: 10px;
   background-color: #ffebee; /* Rosso chiaro */
   padding: 8px;
@@ -106,7 +107,7 @@
 /* Stile per i messaggi di successo */
 .success-message {
   color: #388e3c; /* Verde */
-  font-size: 14px;
+  font-size: 12px;
   margin-top: 10px;
   background-color: #e8f5e9; /* Verde chiaro */
   padding: 8px;
@@ -117,10 +118,79 @@
 /* Effetto drone (opzionale) */
 .register-container::before {
   content: "✈️"; /* Emoji di un aereo/drone */
-  font-size: 40px;
+  font-size: 36px;
   display: block;
   margin-bottom: 10px;
   animation: float 3s ease-in-out infinite;
+}
+
+
+
+
+
+/* Titolo della pagina */
+.register-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* Stile per gli input del modulo */
+.register-container input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.register-container input:focus {
+  border-color: #1266f1;
+  outline: none;
+}
+
+/* Stile per il messaggio di errore */
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+  font-size: 0.875rem;
+}
+
+/* Stile per i pulsanti */
+.register-container button {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px;
+  background-color: #1266f1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.register-container button:hover {
+  background-color: #0e54b1;
+}
+
+/* Link per il login */
+.register-container p {
+  margin-top: 15px;
+  font-size: 1rem;
+  color:black;
+}
+
+.register-container p span {
+  color: #1266f1;
+  cursor: pointer;
+}
+
+.register-container p span:hover {
+  text-decoration: underline;
 }
 
 @keyframes float {

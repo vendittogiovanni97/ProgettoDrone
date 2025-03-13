@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { FormEventHandler, useContext, useState } from "react";
-import "./css/register.css";
+import "../css/register.css";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../context/Auth.Provider";
 import { RegisterForm } from "../types/Register.Form.Type";

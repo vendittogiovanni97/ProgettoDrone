@@ -3,7 +3,10 @@ import ForgotPasswordPage from "./pages/ForgettedPassword";
 import DashboardPage from "./pages/Dashboard";
 import { LoginPages } from "./pages/LoginPages.tsx";
 import { RegisterPages } from "./pages/RegisterPages.tsx";
-import './App.css'
+import VediDettagliPages from "./pages/VediDettagli.tsx"; // Senza {}
+
+
+
 function App() {
     return (
         <Router>
@@ -13,6 +16,7 @@ function App() {
                 <Route path="/register" element={<RegisterPages/>}/>
                 <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
                 <Route path="/dashboard" element={<DashboardPage/>}/>
+                <Route path="/vediDettagli/:deviceId" element={<VediDettagliPages />} />
 
             </Routes>
         </Router>

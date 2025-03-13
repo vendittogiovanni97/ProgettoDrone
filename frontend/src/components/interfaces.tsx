@@ -1,9 +1,11 @@
 export interface DroneData {
     DeviceId: string;
-    UniqueId: string;
-    status: "Online" | "Offline";                                   //Interfaccia per La Tabella
-    lastData: string;
+    temperature: string;
+    timestamp: number;
+    status: "Online" | "Offline"; // Mantieni questo tipo specifico
 }
+
+
 
 export interface DronePosition {
     UniqueId: string;
@@ -20,3 +22,26 @@ export interface DroneMqtt
     latitude: number;
     longitude: number;
 }
+
+export interface MissionData {
+    temperatureStats: {
+        min: number;
+        max: number;
+    };
+    temperatureData: number[];
+    startTime: string;
+    endTime: string;
+}
+export interface Position {
+    lat: number;
+    lon: number;
+}
+
+export interface MissionPositionData {
+    startTime: string;
+    endTime: string;
+    positionData: Position[];
+}
+
+
+
