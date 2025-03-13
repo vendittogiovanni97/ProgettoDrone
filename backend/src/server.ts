@@ -38,6 +38,9 @@ app.use(
     credentials: true,
   })
 );
+app.get("/api/endpoint", (req, res) => {
+  res.status(200).json({ message: "Successo", data: {} });
+});
 
 MQTTService.getInstance();
 

@@ -1,4 +1,6 @@
-import { serverConfig } from "../config/fetchUrl";
+const baseUlr = {
+  path: "https://fa2a-2001-b07-6469-af00-951a-4c69-dcc4-814b.ngrok-free.app/rest",
+};
 
 export const backendFetch = async (
   url: string,
@@ -19,13 +21,10 @@ export const backendFetch = async (
 
   try {
     //console.log("INVIO FETCH ");
-    const fetchResult = await fetch(
-      `${serverConfig.basePath}${serverConfig.basePort}${serverConfig.baseRest}${url}`,
-      fetchOptions
-    );
+    const fetchResult = await fetch(`${baseUlr.path}${url}`, fetchOptions);
 
     const responseBody = await fetchResult.json();
-    const responseDetails= responseBody.details
+    const responseDetails = responseBody.details;
     console.log("RESPONSE FETCH ", fetchResult, responseBody);
 
     return { fetchResult, responseBody, responseDetails };
