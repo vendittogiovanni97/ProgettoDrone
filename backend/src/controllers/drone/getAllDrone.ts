@@ -32,12 +32,11 @@ const getAllDrones = async (
     }
     console.log("errore durante il recupero dei droni", error);
     throw new AppError(
-      responseStatus.INTERNAL_SERVER_ERROR, 
+      responseStatus.INTERNAL_SERVER_ERROR,
       ErrorCodes.ENTITY_NOT_FOUND,
       "Errore durante il recupero dei droni"
-    )
+    );
   }
 };
 
-
-export default getAllDrones
+export default getAllDrones;
