@@ -14,26 +14,35 @@ const PrincipalTableComponent: React.FC = () => {
     const navigate = useNavigate();
 
     // Funzione per recuperare i dati iniziali dalla API
-    /*useEffect(() => {
+    useEffect(() => {
         const fetchInitialData = async () => {
             try {
-                const response = await fetch("http://localhost:8081/rest/mqtt/allDrones");
-                const data = await response.json();
+                const response = await fetch("https://fa2a-2001-b07-6469-af00-951a-4c69-dcc4-814b.ngrok-free.app/rest/mqtt/allDrones", {
+                    headers: {
+                        "Accept": "application/json"
+                    }
+                });
+                const data = await response.json(); // Convertiamo la risposta in JSON
 
-                const formattedData = data.map((drone: any) => ({
-                    DeviceId: drone.DeviceId,
-                    temperature: drone.temperature || "N/A",
-                    timestamp: Date.now(),
-                    status: "Online"
+                if (!data.details || !data.details.drones) {
+                    throw new Error("Struttura dati non valida");
+                }
+
+                // Estrarre solo lat, lon e status per ogni drone
+                const drones = data.details.drones.map((drone: any) => ({
+                    deviceId: drone.deviceId,
+                    temperature: drone.temperature,
+                    status: drone.status || "OFFLINE" // Default se manca lo stato
                 }));
 
-                setDroneData(formattedData);
+                setDroneData(drones);
             } catch (error) {
                 console.error("Errore nel recupero dei dati iniziali:", error);
             }
         };
+
         fetchInitialData();
-    }, []);*/
+    }, []);
 
     // Effetto per la connessione MQTT
     useEffect(() => {
@@ -131,7 +140,7 @@ const PrincipalTableComponent: React.FC = () => {
     ];
 
     return (
-        <div className="ag-theme-alpine">
+        <div className="ag-theme-alpine" style={{overflow: "auto"}}>
             <AgGridReact theme={themeAlpine} rowData={droneData} columnDefs={columnDefs} pagination={true} domLayout="autoHeight" />
         </div>
     );

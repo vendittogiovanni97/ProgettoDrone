@@ -18,11 +18,16 @@
     gap: 20px;
 }
 .table-container{
- margin-top:2%;
-width:80%;
-max-height:40%;}
+    margin-top:2%;
+    width:80%;
+    max-height:40%;
+    border-radius: 10px;
+    border: 2px solid black;
+    box-shadow: 10px 10px 10px black;}
 
-.map-container{
-    margin-bottom: 2%;
+.map-container{margin-bottom: 2%;
 width:80%;
-height:40%;}
+height:40%;
+border-radius: 10px;
+border: 2px solid black;
+box-shadow: 10px 10px 10px lightskyblue;}

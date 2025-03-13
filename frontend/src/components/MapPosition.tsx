@@ -21,35 +21,42 @@ const MapPositionComponent = () => {
     const [dronePositions, setDronePositions] = useState<Record<string, any>>({});  // Stato per le posizioni dei droni
     const markersRef = useRef<{ [key: string]: L.Marker | null }>({});  // Riferimenti ai marker sulla mappa
 
-    // 📌 1. Fetch iniziale per ottenere i droni attivi prima dell'aggiornamento MQTT
-   /* useEffect(() => {
-        const fetchInitialPositions = async () => {
+    useEffect(() => {
+        const fetchDronePositions = async () => {
             try {
-                const response = await fetch("http://localhost:8081/rest/mqtt/allDrones"); // Sostituisci con l'URL corretto
-                if (!response.ok) throw new Error("Errore nel recupero dei dati iniziali");
+                const response = await fetch("https://fa2a-2001-b07-6469-af00-951a-4c69-dcc4-814b.ngrok-free.app/rest/mqtt/allDrones", {
+                    headers: {
+                        "Accept": "application/json"
+                    }
+                });
 
-                const drones = await response.json();
-                const positions = drones.reduce((acc: Record<string, any>, drone: any) => {
-                    acc[drone.id] = {
-                        id: drone.id,
-                        lat: drone.lat,
-                        long: drone.lon,
-                        lastUpdate: Date.now(),
-                        isOnline: true,
-                    };
-                    return acc;
-                }, {});
+                const data = await response.json(); // Convertiamo la risposta in JSON
 
-                setDronePositions(positions);
+                if (!data.details || !data.details.drones) {
+                    throw new Error("Struttura dati non valida");
+                }
+
+                // Estrarre solo lat, lon e status per ogni drone
+                const dronePositions = data.details.drones.map((drone: any) => ({
+                    id: drone.deviceId,
+                    lat: drone.lat,
+                    long: drone.lon,
+                    lastUpdate: Date.now(),
+                    isOnline: drone.status === "ONLINE" // Imposta ONLINE/OFFLINE in base allo stato
+                }));
+
+                setDronePositions(dronePositions);
             } catch (error) {
-                console.error("Errore nel recupero dei dati iniziali:", error);
+                console.error("Errore nel recupero delle posizioni dei droni:", error);
             }
         };
 
-        fetchInitialPositions();
-    }, []);*/
+        fetchDronePositions();
+    }, []);
 
-    // 📌 2. Connessione MQTT per l'aggiornamento in tempo reale
+
+
+    // 2. Connessione MQTT per l'aggiornamento in tempo reale
     useEffect(() => {
         const client = mqtt.connect("wss://nexustlc.ddns.net:443/mqtt", {
             username: "ProgettoDroneClient",
@@ -93,7 +100,7 @@ const MapPositionComponent = () => {
         };
     }, []);
 
-    // 📌 3. Controllo stato online/offline basato sul tempo di aggiornamento
+    //  3. Controllo stato online/offline basato sul tempo di aggiornamento
     useEffect(() => {
         const interval = setInterval(() => {
             setDronePositions((prevPositions) => {
@@ -116,7 +123,7 @@ const MapPositionComponent = () => {
         return () => clearInterval(interval);
     }, []);
 
-    // 📌 4. Aggiornamento icone in base allo stato online/offline
+    //  4. Aggiornamento icone in base allo stato online/offline
     useEffect(() => {
         Object.keys(dronePositions).forEach((id) => {
             const marker = markersRef.current[id];

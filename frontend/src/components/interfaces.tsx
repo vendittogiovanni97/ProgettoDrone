@@ -2,8 +2,9 @@ export interface DroneData {
     DeviceId: string;
     temperature: string;
     timestamp: number;
-    status: "Online" | "Offline";
+    status: "Online" | "Offline"; // Mantieni questo tipo specifico
 }
+
 
 
 export interface DronePosition {
