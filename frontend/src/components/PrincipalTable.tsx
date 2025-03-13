@@ -4,21 +4,39 @@ import { AgGridReact } from "ag-grid-react";
 import { useNavigate } from "react-router-dom";
 import { ClientSideRowModelModule, ModuleRegistry, ColDef } from "ag-grid-community";
 import { DroneData } from "./interfaces";
-import {
-    AllCommunityModule,
-    themeAlpine,
-} from "ag-grid-community";
-import "../css/table.css"
-
+import { AllCommunityModule, themeAlpine } from "ag-grid-community";
+import "../css/table.css";
 
 ModuleRegistry.registerModules([AllCommunityModule, ClientSideRowModelModule]);
 
 const PrincipalTableComponent: React.FC = () => {
-    const [droneData, setDroneData] = useState<DroneData[]>([]); // Stato per memorizzare i dati dei droni
-    const navigate = useNavigate(); // Hook per la navigazione tra le pagine
+    const [droneData, setDroneData] = useState<DroneData[]>([]);
+    const navigate = useNavigate();
 
+    // Funzione per recuperare i dati iniziali dalla API
+    /*useEffect(() => {
+        const fetchInitialData = async () => {
+            try {
+                const response = await fetch("http://localhost:8081/rest/mqtt/allDrones");
+                const data = await response.json();
+
+                const formattedData = data.map((drone: any) => ({
+                    DeviceId: drone.DeviceId,
+                    temperature: drone.temperature || "N/A",
+                    timestamp: Date.now(),
+                    status: "Online"
+                }));
+
+                setDroneData(formattedData);
+            } catch (error) {
+                console.error("Errore nel recupero dei dati iniziali:", error);
+            }
+        };
+        fetchInitialData();
+    }, []);*/
+
+    // Effetto per la connessione MQTT
     useEffect(() => {
-        // Connessione al broker MQTT
         const client = mqtt.connect("wss:nexustlc.ddns.net:443/mqtt", {
             username: "ProgettoDroneClient",
             password: "42286f739da8106ff3049807d1ac3fa5",
@@ -26,21 +44,20 @@ const PrincipalTableComponent: React.FC = () => {
 
         client.on("connect", () => {
             console.log("Connesso a MQTT");
-            client.subscribe("Synapsy/drone/+/+"); // Sottoscrizione al topic per ricevere dati da tutti i droni
+            client.subscribe("Synapsy/drone/+/+");
         });
 
         client.on("message", (topic, message) => {
-            const topicParts = topic.split('/'); // Suddivide il topic per estrarre il DeviceId
-            const deviceId = topicParts[2]; // Estrarre l'ID del drone
+            const topicParts = topic.split('/');
+            const deviceId = topicParts[2];
 
             try {
-                const data = JSON.parse(message.toString()); // Converte il messaggio JSON ricevuto
-                const temperature = data?.temperature || "N/A"; // Estrae la temperatura o imposta "N/A" se mancante
-                const timestamp = Date.now(); // Registra il timestamp corrente
+                const data = JSON.parse(message.toString());
+                const temperature = data?.temperature || "N/A";
+                const timestamp = Date.now();
 
                 setDroneData((prevData) => {
-                    const existingIndex = prevData.findIndex((item) => item.DeviceId === deviceId); // Controlla se il drone esiste già nella lista
-                    const isOnline = true; // Se riceviamo dati, consideriamo il drone online
+                    const existingIndex = prevData.findIndex((item) => item.DeviceId === deviceId);
 
                     if (existingIndex !== -1) {
                         const updatedData = [...prevData];
@@ -48,120 +65,75 @@ const PrincipalTableComponent: React.FC = () => {
                             DeviceId: deviceId,
                             temperature,
                             timestamp,
-                            status: isOnline ? "Online" : "Offline"
+                            status: "Online"
                         };
-                        return updatedData; // Aggiorna il dato esistente del drone
+                        return updatedData;
                     } else {
-                        return [...prevData, {
-                            DeviceId: deviceId,
-                            temperature,
-                            timestamp,
-                            status: isOnline ? "Online" : "Offline"
-                        }];
+                        return [
+                            ...prevData,
+                            {
+                                DeviceId: deviceId,
+                                temperature,
+                                timestamp,
+                                status: "Online"
+                            }
+                        ];
                     }
                 });
             } catch (error) {
-                console.error("Errore nel parsing del messaggio:", error); // Logga un errore se il parsing fallisce
+                console.error("Errore nel parsing del messaggio:", error);
             }
         });
 
         return () => {
-            client.end(); // Disconnessione dal broker MQTT quando il componente viene smontato
+            client.end();
         };
     }, []);
 
+    // Controllo stato droni ogni 20 secondi
     useEffect(() => {
-        // Controlla lo stato dei droni ogni 5 secondi
         const interval = setInterval(() => {
             setDroneData((prevData) =>
                 prevData.map((drone) => {
                     const now = Date.now();
-                    const isOnline = now - drone.timestamp <= 20000; // Se i dati sono più vecchi di 20 secondi, il drone è "Offline"
+                    const isOnline = now - drone.timestamp <= 20000;
                     return { ...drone, status: isOnline ? "Online" : "Offline" };
                 })
             );
         }, 20000);
 
-        return () => clearInterval(interval); // Pulisce l'intervallo quando il componente si smonta
+        return () => clearInterval(interval);
     }, []);
 
-    // Navigazione ai dettagli del drone quando si clicca sul suo ID
     const handleDroneClick = (deviceId: string) => {
-        navigate(`/dettagli/${deviceId}`);
+        navigate(`/vediDettagli/${deviceId}`);
     };
 
-    // Rende l'ID del drone cliccabile e stilizzato come un link
-    const renderDroneId = (value: string) => {
-        return (
-            <span
-                style={{ cursor: "pointer", textDecoration: "underline", color: "blue" }}
-                onClick={() => handleDroneClick(value)}
-            >
-                {value}
-            </span>
-        );
-    };
 
-    // Mostra lo stato del drone con un pallino verde (Online) o rosso (Offline)
-    const renderStatus = (status: string) => {
-        return (
-            <span style={{ display: "flex", alignItems: "center" }}>
-                <span
-                    style={{
-                        width: "10px",
-                        height: "10px",
-                        borderRadius: "50%",
-                        backgroundColor: status === "Online" ? "green" : "red",
-                    }}
-                ></span>
-                {status}
-            </span>
-        );
-    };
+    const renderDroneId = (value: string) => (
+        <span style={{ cursor: "pointer", textDecoration: "underline", color: "blue" }} onClick={() => handleDroneClick(value)}>
+            {value}
+        </span>
+    );
 
-    // Definizione delle colonne della tabella
+    const renderStatus = (status: string) => (
+        <span style={{ display: "flex", alignItems: "center" }}>
+            <span style={{ width: "10px", height: "10px", borderRadius: "50%", backgroundColor: status === "Online" ? "green" : "red" }}></span>
+            {status}
+        </span>
+    );
+
     const columnDefs: ColDef<DroneData>[] = [
-        {
-            headerName: "ID Drone",
-            field: "DeviceId",
-            sortable: true,
-            filter: true,
-            cellRenderer: ({ value }) => renderDroneId(value), // Rende il DeviceId cliccabile
-        },
-        {
-            headerName: "Ultima Temperatura (°C)",
-            field: "temperature",
-            sortable: true,
-            filter: true
-        },
-        {
-            headerName: "Ultimo Dato Ricevuto",
-            field: "timestamp",
-            sortable: true,
-            filter: true,
-            valueFormatter: ({ value }) => new Date(value).toLocaleString() // Formatta il timestamp in una data leggibile
-        },
-        {
-            headerName: "Stato",
-            field: "status",
-            sortable: true,
-            filter: true,
-            cellRenderer: ({ value }) => renderStatus(value) // Mostra il pallino verde/rosso in base allo stato
-        }
+        { headerName: "ID Drone", field: "DeviceId", sortable: true, filter: true, cellRenderer: ({ value }) => renderDroneId(value) },
+        { headerName: "Ultima Temperatura (°C)", field: "temperature", sortable: true, filter: true },
+        { headerName: "Ultimo Dato Ricevuto", field: "timestamp", sortable: true, filter: true, valueFormatter: ({ value }) => new Date(value).toLocaleString() },
+        { headerName: "Stato", field: "status", sortable: true, filter: true, cellRenderer: ({ value }) => renderStatus(value) }
     ];
 
     return (
-
-            <div className="ag-theme-alpine">
-                <AgGridReact
-                    theme={themeAlpine}
-                    rowData={droneData} // Passa i dati dei droni alla tabella
-                    columnDefs={columnDefs} // Imposta le colonne della tabella
-                    pagination={true} // Abilita la paginazione
-                    domLayout="autoHeight" // Adatta la dimensione della tabella
-                />
-            </div>
-
+        <div className="ag-theme-alpine">
+            <AgGridReact theme={themeAlpine} rowData={droneData} columnDefs={columnDefs} pagination={true} domLayout="autoHeight" />
+        </div>
     );
 };
 

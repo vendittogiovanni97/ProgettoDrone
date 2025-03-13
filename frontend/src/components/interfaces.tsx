@@ -21,3 +21,26 @@ export interface DroneMqtt
     latitude: number;
     longitude: number;
 }
+
+export interface MissionData {
+    temperatureStats: {
+        min: number;
+        max: number;
+    };
+    temperatureData: number[];
+    startTime: string;
+    endTime: string;
+}
+export interface Position {
+    lat: number;
+    lon: number;
+}
+
+export interface MissionPositionData {
+    startTime: string;
+    endTime: string;
+    positionData: Position[];
+}
+
+
+
