@@ -1,13 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-const baseUrlVariabile = {
-  path: "https://b194-93-150-201-244.ngrok-free.app/rest/mqtt",
-};
+import { serverConfig } from "../config/fetchUrl";
 
-const baseUrl = {
-  path: "http://localhost:8081/rest/mqtt",
-};
-
-export const backendFetchDrones = async (
+export const backendFetch = async (
   url: string,
   method: "get" | "post" | "delete" | "put" = "get",
   body?: unknown
@@ -26,7 +19,10 @@ export const backendFetchDrones = async (
 
   try {
     //console.log("INVIO FETCH ");
-    const fetchResult = await fetch(`${baseUrl.path}${url}`, fetchOptions);
+    const fetchResult = await fetch(
+      `${serverConfig.basePath}${url}`,
+      fetchOptions
+    );
 
     const responseBody = await fetchResult.json();
     const responseDetails = responseBody.details;

@@ -1,15 +1,16 @@
 /* Login.css - versione senza logo con tema droni */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap");
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
-body, html {
-  background: linear-gradient(to bottom, #F0FDD9, #DCF9A8, #A8D46E);
+body,
+html {
+  background: darkseagreen;
 }
 
 .login-container {
@@ -21,14 +22,12 @@ body, html {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   padding: 30px;
   position: relative;
-  border-top: 4px solid #0093E9;
-
+  border-top: 4px solid #0093e9;
 }
 
-.login-container h1
-{
-  color:black;
-  align-items:center;
+.login-container h1 {
+  color: black;
+  align-items: center;
 }
 
 .login-container input {
@@ -43,7 +42,7 @@ body, html {
 }
 
 .login-container input:focus {
-  border-color: #0093E9;
+  border-color: #0093e9;
   outline: none;
   box-shadow: 0 0 0 3px rgba(0, 147, 233, 0.15);
   transform: translateY(-2px);
@@ -52,7 +51,7 @@ body, html {
 .login-container button {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(to right, #0093E9, #00C6FB);
+  background: linear-gradient(to right, #0093e9, #00c6fb);
   color: white;
   border: none;
   border-radius: 6px;
@@ -68,7 +67,7 @@ body, html {
 }
 
 .login-container button:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -106,18 +105,18 @@ body, html {
   width: auto;
   margin-right: 8px;
   margin-bottom: 0;
-  accent-color: #0093E9;
+  accent-color: #0093e9;
 }
 
 .login-checkbox span {
-  color: #0093E9 !important;
+  color: #0093e9 !important;
   font-weight: 500;
   cursor: pointer;
   transition: color 0.2s;
 }
 
 .login-checkbox span:hover {
-  color: #00C6FB !important;
+  color: #00c6fb !important;
   text-decoration: underline;
 }
 
@@ -129,14 +128,14 @@ body, html {
 }
 
 .login-register span {
-  color: #0093E9 !important;
+  color: #0093e9 !important;
   font-weight: 500;
   cursor: pointer;
   transition: color 0.2s;
 }
 
 .login-register span:hover {
-  color: #00C6FB !important;
+  color: #00c6fb !important;
   text-decoration: underline;
 }
 
@@ -154,7 +153,7 @@ body, html {
 }
 
 .login-container p[style*="color: red"]:before {
-  content: '⚠️';
+  content: "⚠️";
   margin-right: 8px;
 }
 
@@ -207,9 +206,8 @@ body, html {
 
 .login-checkbox span {
   cursor: pointer;
-  color: #0093E9 !important;
+  color: #0093e9 !important;
 }
-
 
 button {
   width: 100%;
@@ -220,7 +218,7 @@ button {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-right:0 !important;
+  margin-right: 0 !important;
 }
 
 button:hover {
@@ -236,9 +234,8 @@ a {
 a:hover {
   text-decoration: underline;
 }
-.login-register p
-{
-  color:black;
+.login-register p {
+  color: black;
 }
 
 @keyframes pulse {

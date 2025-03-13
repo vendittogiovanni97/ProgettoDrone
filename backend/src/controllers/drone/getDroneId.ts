@@ -4,6 +4,7 @@ import { responseStatus } from "../../constants/statusEnum";
 import RealTimeDroneData from "../../models/droneSchemaRealTime";
 import { AppSuccess } from "../../types/succesType";
 import { AppError } from "../../types/appError";
+import DroneHistory from "../../models/droneSchemaHistory";
 
 interface droneId {
   deviceId: string;
@@ -25,9 +26,9 @@ const getDroneById = async (
     }
     //.select in modo positivo iclude solo i dati che vogliamo visualizare,invece con - escludiamo quel campo dalla risposta dei dati
     // un campo che aggiunge mongodb in automatico
-    const drone: droneId | null = await RealTimeDroneData.findOne({
+    const drone = await DroneHistory.find({
       deviceId,
-    }).select("-__v");
+    }).select("-__v -_id");
 
     if (!drone) {
       throw new AppError(

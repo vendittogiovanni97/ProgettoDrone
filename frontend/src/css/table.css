@@ -1,7 +1,6 @@
-ag-theme-alpine
-{
-    width:100%;
-    max-height:40%;
-    border-radius: 10px;
-    overflow:auto;
+ag-theme-alpine {
+  width: 100%;
+  max-height: 50% !important;
+  border-radius: 10px;
+  overflow: auto;
 }

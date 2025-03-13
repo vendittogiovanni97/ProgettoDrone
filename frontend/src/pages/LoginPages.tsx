@@ -38,12 +38,12 @@ export function LoginPages() {
         placeholder="inserisci password"
       />
       <button onClick={handleSubmit}>Login</button>
-        <span
-            onClick={() => navigate("/forgot-password")}
-            style={{ color: "blue", cursor: "pointer" }}
-        >
+      <span
+        onClick={() => navigate("/forgot-password")}
+        style={{ color: "blue", cursor: "pointer" }}
+      >
         Password Dimenticata?
-    </span>
+      </span>
       <p>
         Non hai un account? <Link to="/register">Registrati</Link>
       </p>
