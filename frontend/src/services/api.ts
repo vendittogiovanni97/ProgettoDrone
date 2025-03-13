@@ -1,5 +1,6 @@
 const baseUlr = {
-  path: "https://fa2a-2001-b07-6469-af00-951a-4c69-dcc4-814b.ngrok-free.app/rest",
+  path: "https://b194-93-150-201-244.ngrok-free.app/rest",
+
 };
 
 export const backendFetch = async (

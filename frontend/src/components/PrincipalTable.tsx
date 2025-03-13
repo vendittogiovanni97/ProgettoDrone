@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import mqtt from "mqtt";
+//import mqtt from "mqtt";
 import { AgGridReact } from "ag-grid-react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -23,27 +23,28 @@ const PrincipalTableComponent: React.FC = () => {
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        // Usa backendFetch per fare la richiesta
+        // Richiesta API
         const { responseBody } = await backendFetch("/mqtt/allDrones");
 
-        // Verifica la struttura dei dati
+        // Controllo struttura dati
         if (!responseBody.details || !responseBody.details.drones) {
           throw new Error("Struttura dati non valida");
         }
 
-        // Estrarre solo lat, lon e status per ogni drone
+        // Estrarre i dati necessari
         const drones = responseBody.details.drones.map(
-          (drone: {
-            deviceId: any;
-            temperature: any;
-            status: any;
-            lastUpadate: any;
-          }) => ({
-            deviceId: drone.deviceId,
-            temperature: drone.temperature,
-            timestamp: drone.lastUpadate,
-            status: drone.status || "OFFLINE", // Default se manca lo stato
-          })
+            (drone: {
+              deviceId: string;
+              temperature: number;
+              status: string;
+              lastUpdated: string; // Data in formato stringa ISO
+            }) => ({
+              deviceId: drone.deviceId,
+              temperature: drone.temperature,
+              timestamp: drone.lastUpdated ? new Date(drone.lastUpdated).getTime() : 0,
+
+              status: drone.status || "OFFLINE", // Default OFFLINE
+            })
         );
 
         setDroneData(drones);
@@ -55,72 +56,16 @@ const PrincipalTableComponent: React.FC = () => {
     fetchInitialData();
   }, []);
 
-  // Effetto per la connessione MQTT
-  useEffect(() => {
-    const client = mqtt.connect("wss:nexustlc.ddns.net:443/mqtt", {
-      username: "ProgettoDroneClient",
-      password: "42286f739da8106ff3049807d1ac3fa5",
-    });
 
-    client.on("connect", () => {
-      console.log("Connesso a MQTT");
-      client.subscribe("Synapsy/drone/+/+");
-    });
-
-    client.on("message", (topic, message) => {
-      const topicParts = topic.split("/");
-      const deviceId = topicParts[2];
-
-      try {
-        const data = JSON.parse(message.toString());
-        const temperature = data?.temperature || "N/A";
-        const timestamp = Date.now();
-
-        setDroneData((prevData) => {
-          const existingIndex = prevData.findIndex(
-            (item) => item.DeviceId === deviceId
-          );
-
-          if (existingIndex !== -1) {
-            const updatedData = [...prevData];
-            updatedData[existingIndex] = {
-              DeviceId: deviceId,
-              temperature,
-              timestamp,
-              status: "Online",
-            };
-            return updatedData;
-          } else {
-            return [
-              ...prevData,
-              {
-                DeviceId: deviceId,
-                temperature,
-                timestamp,
-                status: "Online",
-              },
-            ];
-          }
-        });
-      } catch (error) {
-        console.error("Errore nel parsing del messaggio:", error);
-      }
-    });
-
-    return () => {
-      client.end();
-    };
-  }, []);
-
-  // Controllo stato droni ogni 20 secondi
   useEffect(() => {
     const interval = setInterval(() => {
       setDroneData((prevData) =>
-        prevData.map((drone) => {
-          const now = Date.now();
-          const isOnline = now - drone.timestamp <= 20000;
-          return { ...drone, status: isOnline ? "Online" : "Offline" };
-        })
+          prevData.map((drone) => {
+            const now = Date.now();
+            const isOnline = drone.timestamp && (now - drone.timestamp) <= 20000;
+
+            return { ...drone, status: isOnline ? "Online" : "Offline" };
+          })
       );
     }, 20000);
 
@@ -157,7 +102,7 @@ const PrincipalTableComponent: React.FC = () => {
   const columnDefs: ColDef<DroneData>[] = [
     {
       headerName: "ID Drone",
-      field: "DeviceId",
+      field: "deviceId",
       sortable: true,
       filter: true,
       cellRenderer: ({ value }) => renderDroneId(value),

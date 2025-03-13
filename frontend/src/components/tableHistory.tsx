@@ -1,91 +1,101 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import ReactECharts from "echarts-for-react";
-import type { EChartsOption } from "echarts";
-import { MissionData } from "./interfaces.tsx"; // Importiamo l'interfaccia dei dati
+import { backendFetch } from "../services/api";
+import { EChartsOption } from "echarts";
 
-// Componente per visualizzare il grafico delle temperature
-const TableHistoryComponents: React.FC<{ droneId: string }> = ({ droneId }) => {
-    // Stato per memorizzare i dati della missione
-    const [missionData, setMissionData] = useState<MissionData | null>(null);
+const GraficoComponent: React.FC = () => {
+    const { uniqueId } = useParams<{ uniqueId: string }>();
+    const [chartData, setChartData] = useState<{ time: string; temperature: number }[]>([]);
+    const [options, setOptions] = useState<EChartsOption>({}); // ✅ Inizializzato con un oggetto vuoto
 
-    // Effetto per recuperare i dati quando cambia il droneId
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchHistoricalData = async () => {
             try {
-                const response = await fetch(`http://localhost:8081/rest/mqtt/track/${droneId}`);
-                if (!response.ok) throw new Error("Errore nella richiesta");
-                const data: MissionData = await response.json();
-                setMissionData(data); // Salviamo i dati nello stato
+                console.log("Fetching drone list...");
+                const { responseBody } = await backendFetch("/mqtt/allDrones");
+
+                if (!responseBody?.details?.drones) {
+                    throw new Error("Struttura dati non valida");
+                }
+
+                console.log("Drone list:", responseBody.details.drones);
+
+                const selectedDrone = responseBody.details.drones.find(
+                    (drone: { deviceId: string; uniqueId: string }) => drone.deviceId === uniqueId
+                );
+
+                if (!selectedDrone) {
+                    throw new Error("Drone non trovato");
+                }
+
+                console.log("Selected drone:", selectedDrone);
+
+                console.log(`Fetching historical data for drone ${selectedDrone.uniqueId}...`);
+                const historicalResponse = await backendFetch(`/mqtt/track/${selectedDrone.uniqueId}`);
+                const data = historicalResponse.responseBody;
+
+                if (!data?.temperatures || !Array.isArray(data.temperatures)) {
+                    throw new Error("Struttura dati non valida");
+                }
+
+                console.log("Historical data:", data.temperatures);
+
+                const formattedData = data.temperatures.map((entry: { timestamp: string; temperature: number }) => ({
+                    time: new Date(entry.timestamp).toISOString().slice(0, 19).replace("T", " "), // ✅ Formattazione più stabile
+                    temperature: entry.temperature,
+                }));
+
+                setChartData(formattedData);
+
+                setOptions({
+                    title: {
+                        text: `Storico Temperature - Drone ${uniqueId}`,
+                        left: "center",
+                    },
+                    tooltip: {
+                        trigger: "axis",
+                    },
+                    xAxis: {
+                        type: "category",
+                        data: formattedData.map((entry) => entry.time),
+                        axisLabel: {
+                            rotate: 45, // ✅ Ruota le etichette per una migliore leggibilità
+                        },
+                    },
+                    yAxis: {
+                        type: "value",
+                        name: "Temperatura (°C)",
+                    },
+                    series: [
+                        {
+                            name: "Temperatura",
+                            data: formattedData.map((entry) => entry.temperature),
+                            type: "line",
+                            smooth: true,
+                            lineStyle: {
+                                color: "#ff5722", // ✅ Colore più visibile
+                            },
+                            itemStyle: {
+                                color: "#ff5722",
+                            },
+                        },
+                    ],
+                });
             } catch (error) {
-                console.error("Errore nel recupero dei dati:", error);
+                console.error("Errore nel recupero dei dati storici:", error);
             }
         };
 
-        fetchData();
-    }, [droneId]); // Si esegue ogni volta che cambia il droneId
-
-    // Funzione per generare le opzioni del grafico
-    const getChartOption = (): EChartsOption => {
-        if (!missionData) {
-            return { title: { text: "" }, xAxis: {}, yAxis: {}, series: [] }; // Opzione di default se i dati non sono ancora caricati
+        if (uniqueId) {
+            fetchHistoricalData();
         }
 
-        // Estraggo i dati dalla missione
-        const { startTime, endTime, temperatureData, temperatureStats } = missionData;
+    }, [uniqueId]);
 
-        // Converto i timestamp in numeri
-        const startTimestamp = new Date(startTime).getTime();
-        const endTimestamp = new Date(endTime).getTime();
+    if (!chartData.length) return <p>Caricamento dati...</p>;
 
-        // Evito divisioni per zero
-        const dataLength = temperatureData.length || 1;
-
-        // Creo gli intervalli temporali per ogni dato
-        const timestamps = temperatureData.map((_, i) =>
-            startTimestamp + ((endTimestamp - startTimestamp) / dataLength) * i
-        );
-
-        return {
-            title: { text: `Temperature Missione Drone ${droneId}` }, // Titolo del grafico
-            tooltip: { trigger: "axis" }, // Mostra i valori quando si passa sopra il grafico
-            legend: { data: ["Temperatura", "Minima", "Massima"] }, // Legenda
-            xAxis: { type: "time" as const, name: "Tempo", nameLocation: "middle", nameGap: 25 }, // Asse X con dati temporali
-            yAxis: { type: "value", name: "°C", nameLocation: "middle", nameGap: 35 }, // Asse Y con temperature
-            series: [
-                {
-                    name: "Temperatura",
-                    type: "line",
-                    data: timestamps.map((time, i) => [time, temperatureData[i]]), // Dati della temperatura
-                    smooth: true,
-                    lineStyle: { color: "green" },
-                },
-                {
-                    name: "Minima",
-                    type: "line",
-                    data: timestamps.map((time) => [time, temperatureStats.min]), // Linea temperatura minima
-                    smooth: true,
-                    lineStyle: { color: "blue", type: "dashed" },
-                },
-                {
-                    name: "Massima",
-                    type: "line",
-                    data: timestamps.map((time) => [time, temperatureStats.max]), // Linea temperatura massima
-                    smooth: true,
-                    lineStyle: { color: "red", type: "dashed" },
-                },
-            ],
-        };
-    };
-
-    return (
-        <>
-            {!missionData ? (
-                <p>Caricamento dati...</p> // Messaggio di caricamento quando i dati non sono disponibili
-            ) : (
-                <ReactECharts option={getChartOption()} style={{ width: "100%", height: "400px" }} />
-            )}
-        </>
-    );
+    return <ReactECharts option={options} style={{ height: "400px", width: "100%" }} />;
 };
 
-export default TableHistoryComponents;
+export default GraficoComponent;

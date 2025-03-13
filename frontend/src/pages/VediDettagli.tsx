@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import TableHistoryComponents from "../components/tableHistory";
-import MapHistoryComponents from "../components/MapHistory";
+import MapHistoryComponent from "../components/MapHistory";
 import "../css/vediDettagli.css";
 
 const VediDettagliPages: React.FC = () => {
@@ -14,11 +14,12 @@ const VediDettagliPages: React.FC = () => {
         <div className="dettagli-container">
             <h1>Dettagli del Drone: {deviceId}</h1>
             <div className="grafico-container">
-            <TableHistoryComponents droneId={deviceId} />
+            <TableHistoryComponents deviceId={deviceId} />
             </div>
-            <div className="missione-container">
-            <MapHistoryComponents droneId={deviceId} />
+            <div className = "mission-container">
+                <MapHistoryComponent deviceId={deviceId} />
             </div>
+
         </div>
     );
 };
