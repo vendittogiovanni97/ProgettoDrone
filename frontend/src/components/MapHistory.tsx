@@ -2,20 +2,40 @@ import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Polyline, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { MissionPositionData, Position } from "./interfaces.tsx";
+import { useParams } from "react-router-dom";
+import { backendFetch } from "../services/api";
+import {MissionPositionData} from "./interfaces.tsx";
+import {Position} from "./interfaces.tsx";
 
-const MapHistoryComponents: React.FC<{ droneId: string }> = ({ droneId }) => {
+
+const MapHistoryComponent: React.FC = () => {
+    const { uniqueId } = useParams<{ uniqueId: string }>();
     const [missionData, setMissionData] = useState<MissionPositionData | null>(null);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchHistoricalData = async () => {
             try {
-                const response = await fetch(`http://localhost:8081/rest/mqtt/track/${droneId}`);
-                if (!response.ok) throw new Error("Errore nella richiesta");
+                const { responseBody } = await backendFetch("/mqtt/allDrones");
 
-                const data = await response.json();
+                if (!responseBody.details || !responseBody.details.drones) {
+                    throw new Error("Struttura dati non valida");
+                }
 
-                // Parsing dei dati in formato corretto
+                const selectedDrone = responseBody.details.drones.find(
+                    (drone: { deviceId: string; uniqueId: string }) => drone.deviceId === uniqueId
+                );
+
+                if (!selectedDrone) {
+                    throw new Error("Drone non trovato");
+                }
+
+                const historicalResponse = await backendFetch(`/mqtt/track/${selectedDrone.uniqueId}`);
+                const data = historicalResponse.responseBody;
+
+                if (!data.positionData) {
+                    throw new Error("Struttura dati non valida");
+                }
+
                 const parsedData: MissionPositionData = {
                     startTime: data.startTime,
                     endTime: data.endTime,
@@ -27,12 +47,14 @@ const MapHistoryComponents: React.FC<{ droneId: string }> = ({ droneId }) => {
 
                 setMissionData(parsedData);
             } catch (error) {
-                console.error("Errore nel recupero dei dati:", error);
+                console.error("Errore nel recupero dei dati storici:", error);
             }
         };
 
-        fetchData();
-    }, [droneId]);
+        if (uniqueId) {
+            fetchHistoricalData();
+        }
+    }, [uniqueId]);
 
     if (!missionData) {
         return <p>Caricamento dati...</p>;
@@ -81,4 +103,4 @@ const MapHistoryComponents: React.FC<{ droneId: string }> = ({ droneId }) => {
     );
 };
 
-export default MapHistoryComponents;
+export default MapHistoryComponent;

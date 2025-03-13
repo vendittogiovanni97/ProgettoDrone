@@ -1,9 +1,18 @@
 export interface DroneData {
-    DeviceId: string;
-    temperature: string;
+    deviceId: string;
+    temperature: number;
     timestamp: number;
-    status: "Online" | "Offline"; // Mantieni questo tipo specifico
+    status: string;
 }
+
+export interface DroneDataMap {
+    id: string;
+    lat: number;
+    long: number;
+    lastUpdate: number;
+    isOnline: boolean;
+}
+
 
 
 
