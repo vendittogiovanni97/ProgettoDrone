@@ -56,7 +56,7 @@ export default class MQTTService {
       // Preparazione oggetto per aggiornamento stato drone
       const update = {
         status: "ONLINE", // Imposta drone come online
-        timestamp: new Date(), // Aggiorna il timestamp
+        lastUpdated: new Date(), // Aggiorna il timestamp
         lat: data.lat, // Aggiorna posizione
         lon: data.lon,
         temperature: data.temperature, // Aggiorna temperatura
