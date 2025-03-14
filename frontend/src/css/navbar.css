@@ -4,7 +4,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #DCF9A8;
+    background-color: #def3ff;
     width: 100vw;
     min-height: 30px; /* Evita che sia troppo bassa su schermi piccoli */
     transition: background-color 0.3s ease-in-out;
@@ -12,7 +12,7 @@
 }
 
 .navbar:hover {
-background-color:#A8D46E;
+background-color:lightskyblue;
 }
 
 .drone-logo {
@@ -34,7 +34,8 @@ background-color:#A8D46E;
     border-radius: 5px;
     transition: background 0.3s ease;
     width:5%;
-    margin-right: 1% !important;
+    margin-right:0 !important;
+    height: 40px;
 
 }
 

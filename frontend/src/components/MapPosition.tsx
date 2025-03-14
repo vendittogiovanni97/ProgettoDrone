@@ -87,7 +87,7 @@ const MapPositionComponent = () => {
     <div className="leaflet-container">
       <MapContainer
         center={[41.9028, 12.4964]}
-        zoom={6}
+        zoom={5}
         style={{ height: "100%", width: "100%" }}
       >
         <TileLayer

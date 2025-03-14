@@ -7,18 +7,17 @@ import "../css/dashboard.css";
 
 const DashboardPage: React.FC = () => {
     return (
-    <div className="dashboard-container">
-        <NavbarComponent />
-<div className="component-container">
-    <div className="table-container">
-        <PrincipalTableComponent />
-    </div>
-    <div className="map-container">
-        <MapPositionComponent />
-    </div>
-</div>
-    </div>
-
+        <div className="dashboard-container">
+            <NavbarComponent/>
+            <div className="component-container">
+                <div className="table-container">
+                    <PrincipalTableComponent/>
+                </div>
+                <div className="map-container">
+                    <MapPositionComponent/>
+                </div>
+            </div>
+        </div>
 
 
     );

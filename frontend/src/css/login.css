@@ -10,7 +10,9 @@
 
 body,
 html {
-  background: darkseagreen;
+  background: linear-gradient(135deg, #f8feff, #eaf9ff, #def3ff);
+
+
 }
 
 .login-container {
@@ -209,7 +211,7 @@ html {
   color: #0093e9 !important;
 }
 
-button {
+.login-checkbox button {
   width: 100%;
   padding: 10px;
   background-color: #1266f1;
@@ -221,17 +223,17 @@ button {
   margin-right: 0 !important;
 }
 
-button:hover {
+.login-checkbox button:hover {
   background-color: #0a58ca;
 }
 
-a {
+.login-checkbox a {
   text-decoration: none;
   color: #1266f1;
   font-weight: bold;
 }
 
-a:hover {
+.login-checkbox a:hover {
   text-decoration: underline;
 }
 .login-register p {
