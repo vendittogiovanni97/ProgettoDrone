@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 const baseUrlVariabile = {
-  path: "https://b194-93-150-201-244.ngrok-free.app/rest/mqtt",
+  path: "http://192.168.7.61:8081/rest/mqtt",
 };
 
 const baseUrl = {
@@ -18,15 +18,15 @@ export const backendFetchDrones = async (
           method: method,
           body: JSON.stringify(body),
           headers: { "content-type": "application/json" },
-          credentials: "include",
+         // credentials: "include",
         }
       : {
-          credentials: "include",
+         // credentials: "include",
         };
 
   try {
     //console.log("INVIO FETCH ");
-    const fetchResult = await fetch(`${baseUrl.path}${url}`, fetchOptions);
+    const fetchResult = await fetch(`${baseUrlVariabile.path}${url}`, fetchOptions);
 
     const responseBody = await fetchResult.json();
     const responseDetails = responseBody.details;

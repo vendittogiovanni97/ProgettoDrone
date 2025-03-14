@@ -3,8 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { backendFetchDrones } from "../services/api";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef } from "ag-grid-community";
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
 import "../css/storico.css";
 
 interface DroneData {
