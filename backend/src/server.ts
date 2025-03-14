@@ -35,14 +35,14 @@ app.use(
 app.use(
   cors({
     origin: process.env.ORIGIN,
-    credentials: true,
+    //credentials: true,
   })
 );
 app.get("/api/endpoint", (req, res) => {
   res.status(200).json({ message: "Successo", data: {} });
 });
 
-MQTTService.getInstance();
+//MQTTService.getInstance();
 
 addRoutes(app);
 

@@ -119,7 +119,7 @@ export default class MQTTService {
     return MQTTService.instance;
   }
 
-  /*Ho optato per il singleton perchè facciamo in modo qual'ora nel codice venga chiamato più volte,
+  /*Ho optato per il singleton perchè facciamo in modo che qual'ora nel codice venga chiamato più volte,
   MQTTService.getInstance(),esisterà solamente una connessione, perchè se non esiste la crea, ma se esiste restituisce l'istanza già esistente,
   in questo modo risparmiamo in primis le risorse come la memoria, ma eviteremo i loop dei message, e garantiamo
   che ci iscriviamo al topic una sola volta evitando i messaggi duplicati dei dati che riceviamo. */
